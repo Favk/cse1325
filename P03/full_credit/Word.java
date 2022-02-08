@@ -1,8 +1,9 @@
 public class Word{
 	
-		private char[] letters =  new char[5];
+		private char[] letters =  new char[6];
 
-		public void Word(String word){
+		@Override
+		public Word(String word){
 			for(int i = 0; i < 5; i++)
 				letters[i] = word.charAt(i);
 		}

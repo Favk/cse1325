@@ -1,16 +1,14 @@
 public class Puzzle{
+    private Word solution;
+    private boolean solved;
 
-        private Word solution;
-        private boolean solved;
+    public Puzzle(String solution){
 
-        public void Puzzle(String solution){
+    }
 
-        }
-
-        private boolean isSolved(){
-
-        }
-
+    public boolean isSolved(){
+        
+    }
 
 // Add this method to your own Puzzle.java implementation if you like.
 // Depends on your Word class implementation that accepts a-z A-Z . and space.
@@ -56,5 +54,6 @@ public class Puzzle{
         // Return the clue
         return result.toString();
     }
-}
 
+
+}
