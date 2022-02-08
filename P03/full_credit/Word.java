@@ -1,9 +1,10 @@
 public class Word{
 	
-		private char[] letters =  new char[6];
+		private char[] letters =  new char[5];
 
 		public Word(String word){
-			letters = word.toCharArray();
+			for(int i = 0; i < 5; i++)
+				letters[i] = word.charAt(i);
 		}
 
 		public char charAt(int position){

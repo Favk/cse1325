@@ -4,6 +4,7 @@ public class Puzzle{
 
     public Puzzle(String solution){
         this.solution = new Word(solution);
+        //System.out.println(solution);
         solved = false;
     }
 
