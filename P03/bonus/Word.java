@@ -4,7 +4,7 @@ public class Word{
 
 		private boolean validateCharacter(char c){
 			if(!(c >= 'A' || c <= 'Z' || c == '.' || c == ' ')){
-				System.err.println("Invalid entry: Not a letter: " + c);
+				System.err.println("\tInvalid entry: Not a letter: " + c);
 				return false;
 			}
 			else
@@ -15,7 +15,7 @@ public class Word{
 			letters = word.toCharArray();
 
 			if(letters.length > 5)
-				System.err.println("Invalid entry: Not 5 letters: " + word);
+				System.err.println("\tInvalid entry: Not 5 letters: " + word);
 
 			for(int i = 0; i < letters.length; i++){
 				validateCharacter(letters[i]);
@@ -24,14 +24,14 @@ public class Word{
 
 		public char charAt(int position){
 			if((position < 0) || (position > 4))
-				System.err.println("Invalid entry: Out of bounds for array");
+				System.err.println("\tInvalid entry: Out of bounds for array");
 
 			return letters[position];
 		}
 
 		public void setCharAt(char c, int position){
 			if((position < 0) || (position > 4))
-				System.err.println("Invalid entry: Out of bounds for array");
+				System.err.println("\tInvalid entry: Out of bounds for array");
 			
 			if(validateCharacter(c) == true)
 				letters[position] = c;
