@@ -3,11 +3,12 @@ public class Puzzle{
     private boolean solved;
 
     public Puzzle(String solution){
-
+        this.solution = new Word(solution);
+        solved = false;
     }
 
     public boolean isSolved(){
-        
+        return solved;
     }
 
 // Add this method to your own Puzzle.java implementation if you like.

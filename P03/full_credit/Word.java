@@ -2,10 +2,8 @@ public class Word{
 	
 		private char[] letters =  new char[6];
 
-		@Override
 		public Word(String word){
-			for(int i = 0; i < 5; i++)
-				letters[i] = word.charAt(i);
+			letters = word.toCharArray();
 		}
 
 		public char charAt(int position){
