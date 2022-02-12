@@ -1,6 +1,6 @@
 interface Cypher{
 
-	protected public String encrypt(String unencrypted);
-	protected public String decrypt(String encrypt);
+	public String encrypt(String unencrypted);
+	public String decrypt(String encrypt);
 
 }
