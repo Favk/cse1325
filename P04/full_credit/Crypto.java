@@ -1,29 +1,28 @@
 import java.util.Scanner;
-import java.lang.Math;
+import java.util.Random;
 
 public class Crypto {
 
 	public static String generateKey(){
-		String charcatersOfTheAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		char[] letters = charcatersOfTheAlphabets .toLowerCase().toCharArray();
-
-		char[] randKey = new char[26];
+		char[] letters = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+		char[] randomKey = new char[26]; 
 
 		int numOfAlphabets = 0;
-		while(numOfAlphabets < 26) {
-			int point = (int) (26 * Math.random());
-			if(letters[point] == ' ') continue;
+		while(numOfAlphabets < 26){
+			
+			int swapIndex = (int) (26 * Math.random());
 
-			randKey[point] = letters[point];
-			letters[point] = ' ';
-			point++;
+			if(letters[swapIndex] == ' ') continue;
+			randomKey[numOfAlphabets] = letters[swapIndex];
+			letters[swapIndex] = ' ';
+			numOfAlphabets++;
 		}
-
-		return new String(randKey);
+		return new String(randomKey);
 	}
+
 	public static void main(String[] args) {
-		String key = "";
 		Cypher cypher = null;
+		String key = "";
 
 		if(args.length == 0){
 			key = generateKey();
@@ -45,13 +44,12 @@ public class Crypto {
 			try{
 				cypher = new Substitution(key);
 			}
-			catch(IllegalArgumentException e) {
-				System.err.print(e.getMessage());
+			catch(IllegalArgumentException error) {
+				System.err.print(error.getMessage());
 				System.exit(0);
 			}
 		}
 
-		char c;
 		String text;
 		Scanner in = new Scanner(System.in);
 
@@ -61,22 +59,26 @@ public class Crypto {
 			guesses = false;
 
 			System.out.print("(e)ncrypt, (d)ecrypt, or (q)uit? ");
-			c = in.next().charAt(0);
-
+			char c = in.next().charAt(0);
+			in.nextLine();
 			switch (c) {
 				case 'e':
 					System.out.println("Enter text to encrypt");
-					text = in.next(); in.nextLine();
-					System.out.println(cypher.encrypt(text));
+					System.out.println(cypher.encrypt(in.nextLine()));
 					break;
 
 				case 'd':
 					System.out.println("Enter text to decrypt");
-					text = in.next(); in.nextLine();
-					System.out.println(cypher.decrypt(text));
+					System.out.println(cypher.decrypt(in.nextLine()));
 					break;
 
 				case 'q':
+					System.exit(0);
+					break;
+
+				default:
+					guesses = true;
+					System.err.println("Invalid option");
 					break;
 			}
 		}

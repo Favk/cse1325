@@ -9,27 +9,25 @@ public class Substitution implements Cypher{
 	public Substitution(String key){
 
 		if(key.length() != 26) 
-			throw new IllegalArgumentException("Array out of bounds");
+			throw new IllegalArgumentException("Array out of bounds\n");
 
 		key = key.toUpperCase();
-		char[] text = key.toCharArray();
-		Arrays.sort(text);
+		char[] test = key.toCharArray();
+		Arrays.sort(test);
 
-		if(!("ABCDEFGHIJKLMNOPQRSTUVWXYZ").equals(new String(text)))
-			throw new IllegalArgumentException("Must contain all letters of the alphabet");
+		if(!("ABCDEFGHIJKLMNOPQRSTUVWXYZ").equals(new String(test)))
+			throw new IllegalArgumentException("Must contain all letters of the alphabet\n");
 
 		encryptKey = key.toCharArray();
-		
-		char[] temp = new char[26];
-		for(int i = 0; i < (encryptKey.length / 2); i++){
-			temp[i] = decryptKey[i];
-			decryptKey[i] = decryptKey[encryptKey.length  - 1 - i];
-			decryptKey[encryptKey.length  - 1 - i] = temp[i];
+
+		char letter = 'A';
+		for(char a : encryptKey){
+			decryptKey[a - 'A'] = letter++;
 		}
 	}
 
 	public String encrypt(String unencrypted){
-		char[] word = unencrypted.toCharArray();
+		char[] word = unencrypted.toUpperCase().toCharArray();
 
 		for(int i = 0; i < word.length; i++){
 			if(Character.isLetter(word[i])){
@@ -40,14 +38,13 @@ public class Substitution implements Cypher{
 	}
 
 	public String decrypt(String encrypted){
-		char[] word = encrypted.toCharArray();
+		char[] word = encrypted.toUpperCase().toCharArray();
 
-		for(int i = 0; i < 26; i++){
+		for(int i = 0; i < word.length; i++){
 			if(Character.isLetter(word[i])){
 				word[i] = decryptKey[word[i] - 'A'];
 			}
 		}
 		return new String(word);
-
 	}
 }
