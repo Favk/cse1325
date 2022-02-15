@@ -1,3 +1,8 @@
-public class Rot13 {
+public class Rot13 extends Substitution{
+
+	public Rot13(){
+		super("NOPQRSTUVWXYZABCDEFGHIJKLM");
+	}
+
 	
 }
