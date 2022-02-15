@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Random;
 
 public class Crypto {
 
@@ -9,7 +8,6 @@ public class Crypto {
 
 		int numOfAlphabets = 0;
 		while(numOfAlphabets < 26){
-			
 			int swapIndex = (int) (26 * Math.random());
 
 			if(letters[swapIndex] == ' ') continue;
@@ -50,9 +48,7 @@ public class Crypto {
 			}
 		}
 
-		String text;
 		Scanner in = new Scanner(System.in);
-
 		boolean guesses;
 
 		while(true){
@@ -61,6 +57,7 @@ public class Crypto {
 			System.out.print("(e)ncrypt, (d)ecrypt, or (q)uit? ");
 			char c = in.next().charAt(0);
 			in.nextLine();
+
 			switch (c) {
 				case 'e':
 					System.out.println("Enter text to encrypt");

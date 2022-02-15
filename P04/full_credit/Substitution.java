@@ -5,9 +5,7 @@ public class Substitution implements Cypher{
 	protected char[] encryptKey = new char[26];
 	protected char[] decryptKey = new char[26];
 
-
 	public Substitution(String key){
-
 		if(key.length() != 26) 
 			throw new IllegalArgumentException("Array out of bounds\n");
 
