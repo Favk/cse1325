@@ -7,6 +7,7 @@ public class Substitution implements Cypher{
 
 
 	public Substitution(String key){
+
 		if(key.length() != 26) 
 			throw new IllegalArgumentException("Array out of bounds");
 
@@ -18,8 +19,13 @@ public class Substitution implements Cypher{
 			throw new IllegalArgumentException("Must contain all letters of the alphabet");
 
 		encryptKey = key.toCharArray();
-
-		decryptKey = encrypt(new String(encryptKey)).toCharArray();
+		
+		char[] temp = new char[26];
+		for(int i = 0; i < (encryptKey.length / 2); i++){
+			temp[i] = decryptKey[i];
+			decryptKey[i] = decryptKey[encryptKey.length  - 1 - i];
+			decryptKey[encryptKey.length  - 1 - i] = temp[i];
+		}
 	}
 
 	public String encrypt(String unencrypted){
