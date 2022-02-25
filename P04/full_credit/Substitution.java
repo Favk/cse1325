@@ -24,6 +24,7 @@ public class Substitution implements Cypher{
 		}
 	}
 
+	@Override
 	public String encrypt(String unencrypted){
 		char[] word = unencrypted.toUpperCase().toCharArray();
 
@@ -35,6 +36,7 @@ public class Substitution implements Cypher{
 		return new String(word);
 	}
 
+	@Override
 	public String decrypt(String encrypted){
 		char[] word = encrypted.toUpperCase().toCharArray();
 
