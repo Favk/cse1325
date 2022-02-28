@@ -25,6 +25,7 @@ public class Mass {
 		age = in.nextInt(); in.nextLine();
 
 		Dog aDog = new Dog(breed, name, gender, age);
+		aDog.toString();
 
 	}
 }
