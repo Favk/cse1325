@@ -38,21 +38,21 @@ public class Mass {
 		aDog.toString();
 		System.out.println(aDog);
 
-		System.out.print("Enter name of cat: ");
+		System.out.print("\nEnter name of cat: ");
 		name = in.nextLine();
 
 		System.out.print("Enter a breed of cat from one of the following: Persian, Bengal, Siamese, Sphynx, Ragamuffin, Toyger, LaPerm, Peterbald, Savannah, Ragdoll: ");
 		breed = in.nextLine();
-		CatBreed breedOfAnimal = CatBreed.valueOf(breed);
+		CatBreed breedOfCat = CatBreed.valueOf(breed);
 
 		System.out.print("Enter gender: ");
 		gender = in.nextLine();
-		Gender genderOfAnimal = Gender.valueOf(gender);
+		Gender catGender = Gender.valueOf(gender);
 
 		System.out.print("Enter age of cat: ");
 		age = in.nextInt(); in.nextLine();
 
-		Cat aCat = new Cat(breedOfAnimal, name, genderOfAnimal, age);
+		Cat aCat = new Cat(breedOfCat, name, catGender, age);
 		aCat.toString();
 		System.out.println(aCat);
 
