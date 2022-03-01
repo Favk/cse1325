@@ -31,6 +31,7 @@ public class Shelter{
 		StringBuilder str = new StringBuilder();
 
 		for(Animal a : animals){
+			str.append("\n");
 			str.append(a.toString());
 		}
 		return str.toString();
