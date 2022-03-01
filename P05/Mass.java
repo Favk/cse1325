@@ -39,7 +39,8 @@ public class Mass {
 			Dog aDog = new Dog(breedOfAnimal, name, genderOfAnimal, age);
 			aDog.toString();
 
-			System.out.print("\nEnter name of cat: ");
+			System.out.printf("\n");
+			System.out.print("Enter name of cat: ");
 			name = in.nextLine();
 
 			System.out.print("Enter a breed of cat from one of the following: Persian, Bengal, Siamese, Sphynx, Ragamuffin, Toyger, LaPerm, Peterbald, Savannah, Ragdoll: ");
@@ -53,6 +54,8 @@ public class Mass {
 			System.out.print("Enter age of cat: ");
 			age = in.nextInt(); in.nextLine();
 
+			System.out.printf("\n");
+			
 			Cat aCat = new Cat(breedOfCat, name, catGender, age);
 			aCat.toString();
 
