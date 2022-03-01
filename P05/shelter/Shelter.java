@@ -2,7 +2,7 @@ package shelter;
 
 import java.util.ArrayList;
 
-public class Shelter extends Animal{
+public class Shelter{
 	private String name;
 	ArrayList<Animal> animals = new ArrayList<Animal>();
 
@@ -31,7 +31,7 @@ public class Shelter extends Animal{
 		StringBuilder str = new StringBuilder();
 
 		for(Animal a : animals){
-			str.append(c.toString());
+			str.append(a.toString());
 		}
 		return str.toString();
 	}

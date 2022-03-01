@@ -1,5 +1,7 @@
 package shelter;
 
+import shelter.DogBreed;
+
 public class Dog extends Animal{
 	private DogBreed breed;
 
