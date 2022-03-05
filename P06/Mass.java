@@ -31,10 +31,8 @@ public class Mass {
         age = in.nextInt(); in.nextLine();
     }
 
-
-
     public static void main(String[] args) {
-        new MainWindow("Mavs Animal Shelter");
+        new MainWin("Mavs Animal Shelter");
         Shelter shelter = new Shelter("Mavs Animal Shelter");
         char choice = 'x';
         while(choice != 'Q') {
