@@ -1,25 +1,27 @@
 package shelter;
 
-public class Cat extends Animal {
+import shelter.CatBreed;
+
+public class Cat extends Animal{
     private CatBreed breed;
-    
-    public Cat(CatBreed breed, String name, Gender gender, int age) {
+
+    public Cat(CatBreed breed, String name, Gender gender, int age){
         super(name, gender, age);
         this.breed = breed;
     }
 
     @Override
-    public String family() {
+    public String family(){
         return "cat";
     }
     
     @Override
-    public String breed() {
-        return breed.name();
+    public String breed(){
+        return breed.toString();
     }
-    
+
     @Override
-    public String toString() {
-        return super.toString() + " " + breed.name() + " cat";
+    public String toString(){
+        return name + " is a " + gender + " " + family() + " and is " + age + " years old";
     }
 }
