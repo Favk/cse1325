@@ -5,15 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import shelter.Dog;
-import shelter.Cat;
-import shelter.Shelter;
-import shelter.DogBreed;
-import shelter.CatBreed;
-import shelter.Gender;
-
-import java.util.Scanner;
-
 
 public class MainWin extends JFrame {// implements ActionListener {
 	public MainWin(String title){
