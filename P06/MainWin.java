@@ -39,6 +39,7 @@ public class MainWin extends JFrame {// implements ActionListener {
 		about.addActionListener(event -> onAboutClick());
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
+		listAll.addActionListener(event -> updateDisplay());
 		
 		file.add(quit);
 
