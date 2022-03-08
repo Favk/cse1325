@@ -6,5 +6,5 @@ public enum CatBreed {
     Himalayan, Maine_Coon, Norwegian_Forest, Ocicat, 
     Oriental_Shorthair, Persian, Ragdoll, Russian_Blue, 
     Scottish_Fold, Siamese, Sphynx, Tonkinese, Ragamuffin, 
-    Toyger, LaPerm, Peterbald, Savannah
+    Toyger, LaPerm, Peterbald, Savannah, Somali, Korat
 }
