@@ -20,7 +20,7 @@ public class MainWin extends JFrame {
 	public MainWin(String title){
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1600, 900);
+		setSize(900, 900);
 
 		JMenuBar menuBar = new JMenuBar();
 
