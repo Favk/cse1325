@@ -13,9 +13,9 @@ import shelter.DogBreed;
 import shelter.CatBreed;
 import shelter.Gender;
 
-public class MainWin extends JFrame {// implements ActionListener {
-	private Shelter shelter;
-    private JLabel data;
+public class MainWin extends JFrame {
+	private Shelter shelter = new Shelter("Mavs Animal Shelter");
+    private JLabel data = new JLabel("List animals");
 
 	public MainWin(String title){
 		super(title);
@@ -30,7 +30,7 @@ public class MainWin extends JFrame {// implements ActionListener {
 		JMenu animal = new JMenu("Animal");
 		JMenuItem dog = new JMenuItem("New Dog");
 		JMenuItem cat = new JMenuItem("New Cat");
-		JMenuItem listAll = new JMenuItem("List available animals");
+		JMenuItem listAll = new JMenuItem("List animals");
 
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
@@ -61,6 +61,7 @@ public class MainWin extends JFrame {// implements ActionListener {
     	dogButton.setBorder(null);
     	toolbar.add(dogButton);
     	dogButton.addActionListener(event -> onNewDogClick());
+    	add(data, BorderLayout.CENTER);
 
 		JButton catButton = new JButton(new ImageIcon("cat.png"));
     	catButton.setActionCommand("Add a new cat");
@@ -68,14 +69,17 @@ public class MainWin extends JFrame {// implements ActionListener {
     	catButton.setBorder(null);
     	toolbar.add(catButton);
     	catButton.addActionListener(event -> onNewCatClick());
+    	add(data, BorderLayout.CENTER);
 
     	JButton shelterButton = new JButton(new ImageIcon("Animal_Shelter.png"));
     	shelterButton.setActionCommand("List all animals");
     	shelterButton.setToolTipText("List all animals in the shleter entered by the user");
     	shelterButton.setBorder(null);
     	toolbar.add(shelterButton);
-
+    	shelterButton.addActionListener(event -> updateDisplay());
+    	
     	getContentPane().add(toolbar, BorderLayout.PAGE_START);
+    	add(data, BorderLayout.CENTER);
 
 		setJMenuBar(menuBar);
 		setVisible(true);
@@ -89,34 +93,34 @@ public class MainWin extends JFrame {// implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
 
-		JComboBox breeds;
-		JTextField names;
-		JComboBox genders;
-		JSpinner ages;
+		JComboBox breedsOfDog;
+		JTextField dogNames;
+		JComboBox dogGenders;
+		JSpinner agesOfDog;
 
-		JLabel breed = new JLabel("Breed");
+		JLabel breedOfDog = new JLabel("Breed");
 		String[] dogBreeds = {"Mix", "Labrador", "Shepherd", "Retriever", "Bulldog", "Beagle", "Poodle", "Rottweiler", "Pointer", "Terrier", 
     						"Boxer", "Dachshund", "Dalmatian", "Greyhound", "Chihuahua", "Husky", "Samoyed", "Dobermann", "Corgi", "Schnauzer"
     						};
-    	breeds = new JComboBox<String>(dogBreeds);
+    	breedsOfDog = new JComboBox<String>(dogBreeds);
 
-    	JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-    	names = new JTextField(50);
+    	JLabel nameOfDog = new JLabel("<HTML><br/>Name</HTML>");
+    	dogNames = new JTextField(50);
 
     	JLabel gender = new JLabel("<HTML><br/>Gender</HTML>");
     	String[] genderOfDog = {"Male", "Female"};
-    	genders = new JComboBox<String>(genderOfDog);
+    	dogGenders = new JComboBox<String>(genderOfDog);
 
-    	JLabel age = new JLabel("<HTML><br/>Age</HTML>");
+    	JLabel dogAge = new JLabel("<HTML><br/>Age</HTML>");
     	SpinnerModel ageRange = new SpinnerNumberModel(0, 0, 50, 1);
-    	ages = new JSpinner(ageRange);
+    	agesOfDog = new JSpinner(ageRange);
 
-    	Object[] objects = {breed, breeds, name, names, gender, genders, age, ages};
+    	Object[] objects = {breedOfDog, breedsOfDog, nameOfDog, dogNames, gender, dogGenders, dogAge, agesOfDog};
 
     	int button = JOptionPane.showConfirmDialog(this, objects, "New Dog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	if(button == JOptionPane.OK_OPTION){
-    		JOptionPane.showMessageDialog(this, names.getText() + " is a " + genders.getSelectedItem() + " "
-    									+ breeds.getSelectedItem() + " age " + ages.getValue()
+    		JOptionPane.showMessageDialog(this, dogNames.getText() + " is a " + dogGenders.getSelectedItem() + " "
+    									+ breedsOfDog.getSelectedItem() + " age " + agesOfDog.getValue()
     									);
     	}
 
@@ -126,10 +130,10 @@ public class MainWin extends JFrame {// implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
 
-		JComboBox breeds;
-		JTextField names;
-		JComboBox genders;
-		JSpinner ages;
+		JComboBox breedsOfCat;
+		JTextField catNames;
+		JComboBox catGenders;
+		JSpinner agesOfCat;
 
 		JLabel breed = new JLabel("Breed");
 		String[] catBreeds = {"Mix", "Abyssinian", "American_Shorthair", "Bengal", "Birman", "British_Shorthair", "Burmese", "Devon_Rex", 
@@ -137,31 +141,31 @@ public class MainWin extends JFrame {// implements ActionListener {
 							"Russian_Blue", "Scottish_Fold", "Siamese", "Sphynx", "Tonkinese", "Ragamuffin", "Toyger", "LaPerm", 
 							"Peterbald", "Savannah"
     						};
-    	breeds = new JComboBox<String>(catBreeds);
+    	breedsOfCat = new JComboBox<String>(catBreeds);
 
     	JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-    	names = new JTextField(50);
+    	catNames = new JTextField(50);
 
     	JLabel gender = new JLabel("<HTML><br/>Gender</HTML>");
     	String[] genderOfCat = {"Male", "Female"};
-    	genders = new JComboBox<String>(genderOfCat);
+    	catGenders = new JComboBox<String>(genderOfCat);
 
     	JLabel age = new JLabel("<HTML><br/>Age</HTML>");
     	SpinnerModel ageRange = new SpinnerNumberModel(0, 0, 50, 1);
-    	ages = new JSpinner(ageRange);
+    	agesOfCat = new JSpinner(ageRange);
 
-    	Object[] objects = {breed, breeds, name, names, gender, genders, age, ages};
+    	Object[] objects = {breed, breedsOfCat, name, catNames, gender, catGenders, age, agesOfCat};
 
-    	int button = JOptionPane.showConfirmDialog(this, objects, "New Dog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    	int button = JOptionPane.showConfirmDialog(this, objects, "New Cat", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	if(button == JOptionPane.OK_OPTION){
-    		JOptionPane.showMessageDialog(this, names.getText() + " is a " + genders.getSelectedItem() + " "
-    									+ breeds.getSelectedItem() + " age " + ages.getValue()
+    		JOptionPane.showMessageDialog(this, catNames.getText() + " is a " + catGenders.getSelectedItem() + " "
+    									+ breedsOfCat.getSelectedItem() + " age " + agesOfCat.getValue()
     									);
     	}
 
 	}
 
-	public void onAboutClick() {                 // Display About dialog
+	public void onAboutClick() {
 		JDialog about = new JDialog();
     	about.setLayout(new FlowLayout());
     	about.setTitle("Mavs Animal Shelter Software");
@@ -182,15 +186,27 @@ public class MainWin extends JFrame {// implements ActionListener {
     	+ "<p><font size=+2>Mavs Animal Shelter Software</font></p>"
     	+ "<p>Version 1.0</p>"
     	+ "<p>Copyright 2022 by Kolade Favour</p>"
-    	+ "<p>Licensed under Gnu GPL 3.0</p>");
+    	+ "<p>Licensed under Gnu GPL 3.0</p>"
+    	+ "<p>https://cdn-prod.medicalnewstoday.com</p><p>/content/images/articles/322/322868/golden-retriever-puppy.jpg</p>"
+    	+ "<p>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/</p><p>VAN_CAT.png/220px-VAN_CAT.png</p>"
+    	);
+
     	about.add(artists);
 
     	JButton ok = new JButton("OK");
     	ok.addActionListener(event -> about.setVisible(false));
     	about.add(ok);
         
-    	about.setSize(450,400);
+    	about.setSize(700,500);
     	about.setVisible(true);
+    }
+
+    private void updateDisplay(){
+    	data.setText("<html>" + shelter.toString()
+    									.replaceAll("<", "&lt;")
+    									.replaceAll(">", "&gt;")
+    									.replaceAll("\n", "<br/>")
+    							+ "</html>");
     }
 
 	public static void main(String[] args) {
