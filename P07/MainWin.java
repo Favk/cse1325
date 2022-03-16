@@ -119,6 +119,9 @@ public class MainWin extends JFrame {
 
 		JMenu file = new JMenu("File");
 		JMenuItem newFile = new JMenuItem("New Shelter");
+		JMenuItem openFile = new JMenuItem("Open Shelter");
+		JMenuItem saveShelter = new JMenuItem("Save Shelter");
+		JMenuItem saveShelterAs = new JMenuItem("Save Shelter As");
 		JMenuItem quit = new JMenuItem("Quit: Exit Shelter");		
 		
 		JMenu animal = new JMenu("Animal");
@@ -136,6 +139,9 @@ public class MainWin extends JFrame {
 		newFile.addActionListener(event -> onNewShelterClick());
 		
 		file.add(newFile);
+		file.add(openFile);
+		file.add(saveShelter);
+		file.add(saveShelterAs);
 		file.add(quit);
 
 		animal.add(dog);
@@ -149,6 +155,13 @@ public class MainWin extends JFrame {
 		menuBar.add(help);
 
 		JToolBar toolbar = new JToolBar("Shelter Management");
+
+		JButton anewB  = new JButton(UIManager.getIcon("FileView.fileIcon"));
+          anewB.setActionCommand("New Shelter");
+          anewB.setToolTipText("Create a new shelter, discarding any in progress");
+          anewB.setBorder(null);
+          toolbar.add(anewB);
+          anewB.addActionListener(event -> onNewShelterClick());
 
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
@@ -296,9 +309,6 @@ public class MainWin extends JFrame {
     	Object[] objects = {name, shelterName};
 
     	int button = JOptionPane.showConfirmDialog(this, objects, "New Shelter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(button == JOptionPane.OK_OPTION){
-        	JOptionPane.showMessageDialog( this, shelterName.getText());
-        }
     	Shelter animalShelter = new Shelter(shelterName.getText());
     }
 
@@ -312,6 +322,5 @@ public class MainWin extends JFrame {
 
 	public static void main(String[] args) {
     	MainWin aWindow = new MainWin("Mavs Animal Shelter");
-    	aWindow.setVisible(true);
     }
 }
