@@ -105,8 +105,9 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class MainWin extends JFrame {
-	private Shelter shelter = new Shelter("Mavs Animal Shelter");
+	private Shelter shelter;
     private JLabel data;
+    private File filename;
 
 	public MainWin(String title){
 		super(title);
@@ -157,11 +158,13 @@ public class MainWin extends JFrame {
 		JToolBar toolbar = new JToolBar("Shelter Management");
 
 		JButton anewB  = new JButton(UIManager.getIcon("FileView.fileIcon"));
-          anewB.setActionCommand("New Shelter");
-          anewB.setToolTipText("Create a new shelter, discarding any in progress");
-          anewB.setBorder(null);
-          toolbar.add(anewB);
-          anewB.addActionListener(event -> onNewShelterClick());
+        anewB.setActionCommand("New Shelter");
+        anewB.setToolTipText("Create a new shelter, discarding any in progress");
+        anewB.setBorder(null);
+        toolbar.add(anewB);
+        anewB.addActionListener(event -> onNewShelterClick());
+
+        toolbar.add(Box.createHorizontalStrut(25));
 
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
@@ -181,7 +184,7 @@ public class MainWin extends JFrame {
     	
     	toolbar.addSeparator();
 
-    	add(toolbar, BorderLayout.PAGE_START);
+    	getContentPane().add(toolbar, BorderLayout.PAGE_START);
     	add(data, BorderLayout.CENTER);
 
 		setJMenuBar(menuBar);
@@ -309,7 +312,7 @@ public class MainWin extends JFrame {
     	Object[] objects = {name, shelterName};
 
     	int button = JOptionPane.showConfirmDialog(this, objects, "New Shelter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-    	Shelter animalShelter = new Shelter(shelterName.getText());
+    	shelter = new Shelter(shelterName.getText());
     }
 
     private void updateDisplay(){
