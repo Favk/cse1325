@@ -1,6 +1,9 @@
 package shelter;
 
 import shelter.DogBreed;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Dog extends Animal{
     private DogBreed breed;

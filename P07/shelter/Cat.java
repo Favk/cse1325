@@ -1,6 +1,9 @@
 package shelter;
 
 import shelter.CatBreed;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Cat extends Animal{
     private CatBreed breed;
@@ -18,6 +21,11 @@ public class Cat extends Animal{
     @Override
     public String breed(){
         return breed.toString();
+    }
+
+    public Cat(BufferedReader br) throws IOException{
+        super(br);
+        breed = CatBreed.valueOf(br.readLine());
     }
 
     @Override

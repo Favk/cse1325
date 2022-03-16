@@ -23,10 +23,14 @@ abstract class Animal{
     public abstract String breed();
 
     public Animal(BufferedReader br) throws IOException{
+        name = br.readLine();
+        gender = Gender.valueOf(br.readLine());
         age = Integer.parseInt(br.readLine());
     }
 
     public void save(BufferedWriter bw) throws IOException {    
+        bw.write("" + name + '\n');
+        bw.write("" + gender.name() + '\n');
         bw.write("" + age + '\n');
     }
 
