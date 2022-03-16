@@ -109,12 +109,18 @@ public class MainWin extends JFrame {
     private JLabel data;
     private File filename;
 
+    private String NAME = "Nim";
+    private String VERSION = "1.4J";
+    private String FILE_VERSION = "1.0";
+    private String MAGIC_COOKIE = "Mass*/";
+
 	public MainWin(String title){
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 900);
 		data = new JLabel();
 		data.setVerticalAlignment(JLabel.TOP);
+		filename = new File("untitled.mass");
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -138,6 +144,7 @@ public class MainWin extends JFrame {
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
 		newFile.addActionListener(event -> onNewShelterClick());
+		saveShelter.addActionListener(event -> onSaveShelterClick());
 		
 		file.add(newFile);
 		file.add(openFile);
@@ -163,6 +170,13 @@ public class MainWin extends JFrame {
         anewB.setBorder(null);
         toolbar.add(anewB);
         anewB.addActionListener(event -> onNewShelterClick());
+
+        JButton saveButton = new JButton(new ImageIcon("save.jpg"));
+    	saveButton.setActionCommand("Save animals in a shelter");
+    	saveButton.setToolTipText("Save all new animals");
+    	saveButton.setBorder(null);
+    	toolbar.add(saveButton);
+    	saveButton.addActionListener(event -> onSaveShelterClick());
 
         toolbar.add(Box.createHorizontalStrut(25));
 
@@ -321,6 +335,16 @@ public class MainWin extends JFrame {
     									.replaceAll(">", "&gt;")
     									.replaceAll("\n", "<br/>")
     							+ "</html>");
+    }
+
+    public void onSaveShelterClick() {         // Create a new game
+    	try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            bw.write(MAGIC_COOKIE + '\n');
+            bw.write(FILE_VERSION + '\n');
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
+                "Failed", JOptionPane.ERROR_MESSAGE); 
+        }
     }
 
 	public static void main(String[] args) {
