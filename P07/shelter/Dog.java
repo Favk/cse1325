@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class Dog extends Animal{
     private DogBreed breed;
+    private String dogFamily;
 
     public Dog(DogBreed breed, String name, Gender gender, int age){
         super(name, gender, age);
@@ -21,6 +22,21 @@ public class Dog extends Animal{
     @Override
     public String breed(){
         return breed.toString();
+    }
+
+    public Dog(BufferedReader br) throws IOException{
+        super(br);
+        dogFamily = family();
+        dogFamily = br.readLine();
+        breed = DogBreed.valueOf(br.readLine());
+    }
+
+    public void save(BufferedWriter bw) throws IOException {  
+        bw.write("" + dogFamily + '\n');  
+        bw.write("" + name + '\n');
+        bw.write("" + gender.name() + '\n');
+        bw.write("" + age + '\n');
+        bw.write("" + breed.name() + '\n');
     }
 
     @Override
