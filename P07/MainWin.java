@@ -164,7 +164,7 @@ public class MainWin extends JFrame {
 
 		JToolBar toolbar = new JToolBar("Shelter Management");
 
-		JButton anewB  = new JButton(UIManager.getIcon("FileView.fileIcon"));
+		JButton anewB  = new JButton(new ImageIcon("saveas.jpg"));
         anewB.setActionCommand("New Shelter");
         anewB.setToolTipText("Create a new shelter, discarding any in progress");
         anewB.setBorder(null);
@@ -177,8 +177,6 @@ public class MainWin extends JFrame {
     	saveButton.setBorder(null);
     	toolbar.add(saveButton);
     	saveButton.addActionListener(event -> onSaveShelterClick());
-
-        toolbar.add(Box.createHorizontalStrut(25));
 
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
