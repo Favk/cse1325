@@ -1,6 +1,9 @@
 package shelter;
 
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Shelter{
     private String name;
