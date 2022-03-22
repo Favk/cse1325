@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class Shelter{
     private String name;
+    private Animal animal;
     ArrayList<Animal> animals = new ArrayList<Animal>();
 
     public Shelter(String name){
@@ -27,6 +28,21 @@ public class Shelter{
         }
 
         return animals.get(index);
+    }
+
+    public Shelter(BufferedReader br) throws IOException{
+        for(Animal a : animals){
+            animal = Animal(br);
+        }
+    }
+
+    public void save(BufferedWriter bw) throws IOException{
+        bw.write("" + name + '\n');
+        bw.write("" + numAnimals() + '\n');
+
+        for(Animal a : animals){
+            a.save(bw);
+        }
     }
 
     @Override
