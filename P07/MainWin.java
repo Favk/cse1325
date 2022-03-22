@@ -112,7 +112,7 @@ public class MainWin extends JFrame {
     private String NAME = "Mass";
     private String VERSION = "1.4J";
     private String FILE_VERSION = "1.0";
-    private String MAGIC_COOKIE = "Mass*/";
+    private String MAGIC_COOKIE = "Mass🐾🐾";
 
 	public MainWin(String title){
 		super(title);
@@ -166,12 +166,19 @@ public class MainWin extends JFrame {
 
 		JToolBar toolbar = new JToolBar("Shelter Management");
 
-		JButton anewB  = new JButton(new ImageIcon("saveas.jpg"));
+		JButton anewB  = new JButton(new ImageIcon("new.jpg"));
         anewB.setActionCommand("New Shelter");
         anewB.setToolTipText("Create a new shelter, discarding any in progress");
         anewB.setBorder(null);
         toolbar.add(anewB);
         anewB.addActionListener(event -> onNewShelterClick());
+
+        JButton openShelterButton = new JButton(new ImageIcon("home.jpg"));
+    	openShelterButton.setActionCommand("Open shelter");
+    	openShelterButton.setToolTipText("Open shelter and see animals");
+    	openShelterButton.setBorder(null);
+    	toolbar.add(openShelterButton);
+    	openShelterButton.addActionListener(event -> onOpenShelterClick());
 
         JButton saveButton = new JButton(new ImageIcon("save.jpg"));
     	saveButton.setActionCommand("Save animals in a shelter");
@@ -179,6 +186,13 @@ public class MainWin extends JFrame {
     	saveButton.setBorder(null);
     	toolbar.add(saveButton);
     	saveButton.addActionListener(event -> onSaveShelterClick());
+
+    	JButton saveAsButton = new JButton(new ImageIcon("saveas.png"));
+    	saveAsButton.setActionCommand("Save animals in a different file name");
+    	saveAsButton.setToolTipText("Save all new animals in different file name");
+    	saveAsButton.setBorder(null);
+    	toolbar.add(saveAsButton);
+    	saveAsButton.addActionListener(event -> onSaveShelterAsClick());
 
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
@@ -303,6 +317,7 @@ public class MainWin extends JFrame {
     	+ "<p>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/</p><p>VAN_CAT.png/220px-VAN_CAT.png</p>"
     	+ "<p>https://images.ctfassets.net/82d3r48zq721/45liwTLsDMSJt4N22RqrHX/</p><p>"
     	+ "cd992f88ca8737f95b085212906d6d86/Can-cats-and-dogs-get-</p><p>coronavirus_resized.jpg?w=800&h=542&q=50&fm=webp</p>"
+    	+ "<p>https://encrypted-tbn0.gstatic.com/images?q=tbn</p><p>:ANd9GcR4rOgZhbSxMluMDlzbgxfuss7FloRKP1N3fQ&usqp=CAU</p>"
     	);
 
     	about.add(artists);
@@ -341,6 +356,7 @@ public class MainWin extends JFrame {
     	try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             bw.write(MAGIC_COOKIE + '\n');
             bw.write(FILE_VERSION + '\n');
+
             shelter.save(bw);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
