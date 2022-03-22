@@ -337,10 +337,11 @@ public class MainWin extends JFrame {
     							+ "</html>");
     }
 
-    public void onSaveShelterClick() {         // Create a new game
+    public void onSaveShelterClick() {
     	try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             bw.write(MAGIC_COOKIE + '\n');
             bw.write(FILE_VERSION + '\n');
+            shelter.save(bw);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
                 "Failed", JOptionPane.ERROR_MESSAGE); 
@@ -363,7 +364,7 @@ public class MainWin extends JFrame {
                 String fileVersion = br.readLine();
                 if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
                 
-                //nim = new Nim(br);
+                shelter = new Shelter(br);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
                     "Failed", JOptionPane.ERROR_MESSAGE); 
