@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Shelter{
     private String name;
-    private Animal animal;
+    private String filename;
     ArrayList<Animal> animals = new ArrayList<Animal>();
 
     public Shelter(String name){
@@ -31,8 +31,18 @@ public class Shelter{
     }
 
     public Shelter(BufferedReader br) throws IOException{
+        this(br.readLine());
+
+        String familyName;
+        filename = br.readLine();
         for(Animal a : animals){
-            animal = Animal(br);
+            familyName = br.readLine();
+            if(familyName == "dog"){
+                addAnimal(new Dog(br));
+            }
+            if(familyName == "cat"){
+                addAnimal(new Cat(br));
+            }
         }
     }
 
@@ -54,5 +64,13 @@ public class Shelter{
             str.append(a.toString());
         }
         return str.toString();
+    }
+
+    public String getFilename(){
+        return filename;
+    }
+
+    public void setFilename(String filename){
+        this.filename = filename;
     }
 }
