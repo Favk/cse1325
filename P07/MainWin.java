@@ -105,11 +105,11 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class MainWin extends JFrame {
-	private Shelter shelter;
+	private Shelter shelter = new Shelter("Mavs Animal Shelter");
     private JLabel data;
     private File filename;
 
-    private String NAME = "Nim";
+    private String NAME = "Mass";
     private String VERSION = "1.4J";
     private String FILE_VERSION = "1.0";
     private String MAGIC_COOKIE = "Mass*/";
@@ -144,7 +144,9 @@ public class MainWin extends JFrame {
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
 		newFile.addActionListener(event -> onNewShelterClick());
+		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
+		saveShelterAs.addActionListener(event -> onSaveShelterAsClick());
 		
 		file.add(newFile);
 		file.add(openFile);
@@ -342,6 +344,45 @@ public class MainWin extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
                 "Failed", JOptionPane.ERROR_MESSAGE); 
+        }
+    }
+
+	public void onOpenShelterClick() {
+        final JFileChooser fc = new JFileChooser(filename);
+        FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(massFiles);         
+        fc.setFileFilter(massFiles);
+        
+        int result = fc.showOpenDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            filename = fc.getSelectedFile();        
+            
+            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+                String magicCookie = br.readLine();
+                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
+                String fileVersion = br.readLine();
+                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
+                
+                //nim = new Nim(br);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
+                    "Failed", JOptionPane.ERROR_MESSAGE); 
+             }
+        }
+    }
+
+    public void onSaveShelterAsClick() {         
+        final JFileChooser fc = new JFileChooser(filename); 
+        FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(massFiles);
+        fc.setFileFilter(massFiles);       
+        
+        int result = fc.showSaveDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) { 
+            filename = fc.getSelectedFile();
+            if(!filename.getAbsolutePath().endsWith(".mass"))
+                filename = new File(filename.getAbsolutePath() + ".mass");
+            onSaveShelterClick();
         }
     }
 
