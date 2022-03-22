@@ -40,6 +40,6 @@ public class Cat extends Animal{
 
     @Override
     public String toString(){
-        return name + " is a " + gender + " " + family() + " and is " + age + " years old";
+        return name + " is a " + gender + " " + breed() + " " + family() + " and is " + age + " years old";
     }
 }
