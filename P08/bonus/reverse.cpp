@@ -1,24 +1,22 @@
 #include <string>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-string convertToString(char* a){
-    string s = a;
-    return s;
-}
-
-void reverseString(string& str){
-	int size = str.length();
-
-	for(int i = 0; i < (size / 2); i++){
-		swap(str[i], str[size-i-1]);
+void Reverse(char arr[]){
+	if (*arr == '\0'){
+		return;
+	}
+	else{
+		Reverse(arr+1);
+		cout << *(arr);
 	}
 }
 
 int main(int argc, char** argv){
-
 	for (int i = 1; i < argc; ++i){
-		cout << convertToString(argv[i]) << endl;
+		Reverse(argv[i]);
+		cout << endl;
 	}
 	return 0;
 }
