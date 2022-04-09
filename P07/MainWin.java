@@ -385,6 +385,7 @@ public class MainWin extends JFrame {
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
                     "Failed", JOptionPane.ERROR_MESSAGE); 
              }
+             updateDisplay();
         }
     }
 

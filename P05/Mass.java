@@ -6,7 +6,6 @@ import shelter.CatBreed;
 import shelter.Gender;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Mass {
 	public static void main(String[] args) {
@@ -37,6 +36,7 @@ public class Mass {
 			age = in.nextInt(); in.nextLine();
 
 			Dog aDog = new Dog(breedOfAnimal, name, genderOfAnimal, age);
+			entries++;
 			aDog.toString();
 
 			System.out.printf("\n");
@@ -57,12 +57,11 @@ public class Mass {
 			System.out.printf("\n");
 			
 			Cat aCat = new Cat(breedOfCat, name, catGender, age);
+			entries++;
 			aCat.toString();
 
 			shelter.addAnimal(aDog);
 			shelter.addAnimal(aCat);
-
-			entries+=2;
 
 			shelter.toString();
 		}

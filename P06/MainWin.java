@@ -135,7 +135,6 @@ public class MainWin extends JFrame {
     	catNames = new JTextField(50);
 
     	JLabel gender = new JLabel("<HTML><br/>Gender</HTML>");
-    	//String[] genderOfCat = {"Male", "Female"};
     	catGenders = new JComboBox<>(Gender.values());
 
     	JLabel age = new JLabel("<HTML><br/>Age</HTML>");
