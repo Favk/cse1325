@@ -134,6 +134,7 @@ public class MainWin extends JFrame {
 		JMenu animal = new JMenu("Animal");
 		JMenuItem dog = new JMenuItem("New Dog");
 		JMenuItem cat = new JMenuItem("New Cat");
+		JMenuItem rabbit = new JMenuItem("New Rabbit");
 		JMenuItem listAll = new JMenuItem("List animals");
 
 		JMenu help = new JMenu("Help");
@@ -143,6 +144,7 @@ public class MainWin extends JFrame {
 		about.addActionListener(event -> onAboutClick());
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
+		rabbit.addActionListener(event -> onNewRabbitClick());
 		newFile.addActionListener(event -> onNewShelterClick());
 		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
@@ -156,6 +158,7 @@ public class MainWin extends JFrame {
 
 		animal.add(dog);
 		animal.add(cat);
+		animal.add(rabbit);
 		animal.add(listAll);
 
 		help.add(about);
@@ -286,6 +289,40 @@ public class MainWin extends JFrame {
     		Cat aCat = new Cat((CatBreed)breedsOfCat.getSelectedItem(), catNames.getText(), 
     					(Gender)catGenders.getSelectedItem(), (Integer)agesOfCat.getValue());
     		shelter.addAnimal(aCat);
+    		updateDisplay();
+    	}
+
+	}
+
+	public void onNewRabbitClick() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 900);
+
+		JComboBox breedsOfRabbit;
+		JTextField rabbitNames;
+		JComboBox rabbitGenders;
+		JSpinner ageOfRabbit;
+
+		JLabel breed = new JLabel("Breed");
+    	breedsOfRabbit = new JComboBox<>(CatBreed.values());
+
+    	JLabel name = new JLabel("<HTML><br/>Name</HTML>");
+    	rabbitNames = new JTextField(50);
+
+    	JLabel gender = new JLabel("<HTML><br/>Gender</HTML>");
+    	rabbitGenders = new JComboBox<>(Gender.values());
+
+    	JLabel age = new JLabel("<HTML><br/>Age</HTML>");
+    	SpinnerModel ageRange = new SpinnerNumberModel(0, 0, 50, 1);
+    	ageOfRabbit = new JSpinner(ageRange);
+
+    	Object[] objects = {breed, breedsOfRabbit, name, rabbitNames, gender, rabbitGenders, age, ageOfRabbit};
+
+    	int button = JOptionPane.showConfirmDialog(this, objects, "New Cat", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    	if(button == JOptionPane.OK_OPTION){
+    		Rabbit aRabbit = new Rabbit((RabbitBreed)breedsOfRabbit.getSelectedItem(), rabbitNames.getText(), 
+    					(Gender)rabbitGenders.getSelectedItem(), (Integer)ageOfRabbit.getValue());
+    		shelter.addAnimal(aRabbit);
     		updateDisplay();
     	}
 
