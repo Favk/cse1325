@@ -19,6 +19,10 @@ public class Shelter{
         animals.add(animal);
     }
 
+    public void addClient(Client client){
+        clients.add(client);
+    }
+
     public int numAnimals(){
         return animals.size();
     }
@@ -44,6 +48,9 @@ public class Shelter{
             if(familyName == "cat"){
                 addAnimal(new Cat(br));
             }
+            if(familyName == "rabbit"){
+                addAnimal(new Rabbit(br));
+            }
         }
     }
 
@@ -65,6 +72,16 @@ public class Shelter{
             str.append(a.toString());
         }
         return str.toString();
+    }
+
+    public String clientsToString(){
+        StringBuilder person = new StringBuilder();
+
+        for(Client c : clients){
+            person.append("\n");
+            person.append(c.toString());
+        }
+        return person.toString();
     }
 
     public String getFilename(){
