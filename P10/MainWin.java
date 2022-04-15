@@ -40,9 +40,11 @@ import java.io.IOException;
 
 import shelter.Dog;
 import shelter.Cat;
+import shelter.Rabbit;
 import shelter.Shelter;
 import shelter.DogBreed;
 import shelter.CatBreed;
+import shelter.RabbitBreed;
 import shelter.Gender;
 
 import java.io.BufferedReader;
@@ -137,6 +139,9 @@ public class MainWin extends JFrame {
 		JMenuItem rabbit = new JMenuItem("New Rabbit");
 		JMenuItem listAll = new JMenuItem("List animals");
 
+		JMenu client = new JMenu("Client");
+		JMenuItem newClient = new JMenuItem("New Client");
+
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
 
@@ -161,10 +166,13 @@ public class MainWin extends JFrame {
 		animal.add(rabbit);
 		animal.add(listAll);
 
+		client.add(newClient);
+
 		help.add(about);
 
 		menuBar.add(file);
 		menuBar.add(animal);
+		menuBar.add(client);
 		menuBar.add(help);
 
 		JToolBar toolbar = new JToolBar("Shelter Management");
