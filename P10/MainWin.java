@@ -42,6 +42,7 @@ import shelter.Dog;
 import shelter.Cat;
 import shelter.Rabbit;
 import shelter.Shelter;
+import shelter.Client;
 import shelter.DogBreed;
 import shelter.CatBreed;
 import shelter.RabbitBreed;
@@ -151,6 +152,7 @@ public class MainWin extends JFrame {
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
 		rabbit.addActionListener(event -> onNewRabbitClick());
+		newClient.addActionListener(event -> onNewClientCLick());
 		newFile.addActionListener(event -> onNewShelterAsClick());
 		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
@@ -388,15 +390,46 @@ public class MainWin extends JFrame {
             setTitle("MASS - " + name);
         }
     }
-    
+
     public void onNewShelterClick(String name) {
         shelter = new Shelter(name);
         shelter.setFilename("Untitled.mass");
         updateDisplay();
     }
 
+    public void onNewClientCLick(){
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 900);
+
+		JTextField clientName;
+		JTextField clientNumber;
+
+    	JLabel nameOfClient = new JLabel("<HTML><br/>Name</HTML>");
+    	clientName = new JTextField(50);
+
+    	JLabel number = new JLabel("<HTML><br/>Phone Number</HTML>");
+    	clientNumber = new JTextField(50);
+
+    	Object[] objects = {nameOfClient, clientName, number, clientNumber};
+
+    	int button = JOptionPane.showConfirmDialog(this, objects, "New Client", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    	if(button == JOptionPane.OK_OPTION){
+    		Client aClient = new Client(clientName.getText(), clientNumber.getText());
+    		shelter.addClient(aClient);
+    		updateClientDisplay();
+    	}
+    }
+
     private void updateDisplay(){
     	data.setText("<html>" + shelter.toString()
+    									.replaceAll("<", "&lt;")
+    									.replaceAll(">", "&gt;")
+    									.replaceAll("\n", "<br/>")
+    							+ "</html>");
+    }
+
+    private void updateClientDisplay(){
+    	data.setText("<html>" + shelter.clientsToString()
     									.replaceAll("<", "&lt;")
     									.replaceAll(">", "&gt;")
     									.replaceAll("\n", "<br/>")
@@ -411,15 +444,14 @@ public class MainWin extends JFrame {
         fc.setFileFilter(massFiles);
         
         int result = fc.showOpenDialog(this); 
-        // Also available: CANCEL_OPTION and ERROR_OPTION
         if (result == JFileChooser.APPROVE_OPTION) {
             filename = fc.getSelectedFile(); 
             
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-                // String magicCookie = br.readLine();
-                // if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
-                // String fileVersion = br.readLine();
-                // if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
+                String magicCookie = br.readLine();
+                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
+                String fileVersion = br.readLine();
+                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
                 
                 shelter = new Shelter(br); 
             } catch (Exception e) {
@@ -432,8 +464,9 @@ public class MainWin extends JFrame {
 
     public void onSaveShelterClick() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(shelter.getFilename())))) {
-            // bw.write(MAGIC_COOKIE + '\n');
-            // bw.write(FILE_VERSION + '\n');
+            bw.write(MAGIC_COOKIE + '\n');
+            bw.write(FILE_VERSION + '\n');
+
             shelter.save(bw);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Unable to open " + shelter.getFilename() + '\n' + e,
@@ -449,7 +482,6 @@ public class MainWin extends JFrame {
         fc.setFileFilter(massFiles);
         
         int result = fc.showSaveDialog(this);
-        // Also available: CANCEL_OPTION and ERROR_OPTION
         if (result == JFileChooser.APPROVE_OPTION) { 
             filename = fc.getSelectedFile();
             if(!filename.getAbsolutePath().endsWith(".mass"))
@@ -458,6 +490,8 @@ public class MainWin extends JFrame {
             onSaveShelterClick(); 
         }    
     }
+
+
 
 	public static void main(String[] args) {
     	MainWin aWindow = new MainWin("Mavs Animal Shelter");
