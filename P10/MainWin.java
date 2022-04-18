@@ -141,6 +141,7 @@ public class MainWin extends JFrame {
 
 		JMenu client = new JMenu("Client");
 		JMenuItem newClient = new JMenuItem("New Client");
+		JMenuItem listClient = new JMenuItem("List all clients");
 
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
@@ -150,7 +151,7 @@ public class MainWin extends JFrame {
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
 		rabbit.addActionListener(event -> onNewRabbitClick());
-		newFile.addActionListener(event -> onNewShelterClick());
+		newFile.addActionListener(event -> onNewShelterAsClick());
 		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
 		saveShelterAs.addActionListener(event -> onSaveShelterAsClick());
@@ -167,6 +168,7 @@ public class MainWin extends JFrame {
 		animal.add(listAll);
 
 		client.add(newClient);
+		client.add(listClient);
 
 		help.add(about);
 
@@ -182,7 +184,7 @@ public class MainWin extends JFrame {
         anewB.setToolTipText("Create a new shelter, discarding any in progress");
         anewB.setBorder(null);
         toolbar.add(anewB);
-        anewB.addActionListener(event -> onNewShelterClick());
+        anewB.addActionListener(event -> onNewShelterAsClick());
 
         JButton openShelterButton = new JButton(new ImageIcon("home.jpg"));
     	openShelterButton.setActionCommand("Open shelter");
@@ -311,8 +313,8 @@ public class MainWin extends JFrame {
 		JComboBox rabbitGenders;
 		JSpinner ageOfRabbit;
 
-		JLabel breed = new JLabel("Breed");
-    	breedsOfRabbit = new JComboBox<>(CatBreed.values());
+		JLabel breeds = new JLabel("Breed");
+    	breedsOfRabbit = new JComboBox<>(RabbitBreed.values());
 
     	JLabel name = new JLabel("<HTML><br/>Name</HTML>");
     	rabbitNames = new JTextField(50);
@@ -324,7 +326,7 @@ public class MainWin extends JFrame {
     	SpinnerModel ageRange = new SpinnerNumberModel(0, 0, 50, 1);
     	ageOfRabbit = new JSpinner(ageRange);
 
-    	Object[] objects = {breed, breedsOfRabbit, name, rabbitNames, gender, rabbitGenders, age, ageOfRabbit};
+    	Object[] objects = {breeds, breedsOfRabbit, name, rabbitNames, gender, rabbitGenders, age, ageOfRabbit};
 
     	int button = JOptionPane.showConfirmDialog(this, objects, "New Cat", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	if(button == JOptionPane.OK_OPTION){
@@ -375,18 +377,22 @@ public class MainWin extends JFrame {
     	about.setVisible(true);
     }
 
-    public void onNewShelterClick(){
-    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(200, 200);
-
-    	JTextField shelterName;
-    	JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-    	shelterName = new JTextField(50);
-
-    	Object[] objects = {name, shelterName};
-
-    	int button = JOptionPane.showConfirmDialog(this, objects, "New Shelter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-    	shelter = new Shelter(shelterName.getText());
+    public void onNewShelterAsClick() {
+        String name = JOptionPane.showInputDialog(
+            this, 
+            "Enter the new shelter's name", 
+            "Shelter Name", 
+            JOptionPane.QUESTION_MESSAGE);
+        if(name != null && name.length() > 0) {
+            onNewShelterClick(name);
+            setTitle("MASS - " + name);
+        }
+    }
+    
+    public void onNewShelterClick(String name) {
+        shelter = new Shelter(name);
+        shelter.setFilename("Untitled.mass");
+        updateDisplay();
     }
 
     private void updateDisplay(){
@@ -397,58 +403,60 @@ public class MainWin extends JFrame {
     							+ "</html>");
     }
 
-    public void onSaveShelterClick() {
-    	try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            bw.write(MAGIC_COOKIE + '\n');
-            bw.write(FILE_VERSION + '\n');
-
-            shelter.save(bw);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
-                "Failed", JOptionPane.ERROR_MESSAGE); 
-        }
-    }
-
-	public void onOpenShelterClick() {
-		File filename = new File(shelter.getFilename());
+    public void onOpenShelterClick() {
+        File filename = new File(shelter.getFilename());
         final JFileChooser fc = new JFileChooser(filename);
-        FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
-        fc.addChoosableFileFilter(massFiles);         
+        FileFilter massFiles = new FileNameExtensionFilter("MASS files", "mass");
+        fc.addChoosableFileFilter(massFiles);
         fc.setFileFilter(massFiles);
         
-        int result = fc.showOpenDialog(this);        
+        int result = fc.showOpenDialog(this); 
+        // Also available: CANCEL_OPTION and ERROR_OPTION
         if (result == JFileChooser.APPROVE_OPTION) {
-            filename = fc.getSelectedFile();        
+            filename = fc.getSelectedFile(); 
             
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-                String magicCookie = br.readLine();
-                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
-                String fileVersion = br.readLine();
-                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
+                // String magicCookie = br.readLine();
+                // if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
+                // String fileVersion = br.readLine();
+                // if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
                 
-                shelter = new Shelter(br);
+                shelter = new Shelter(br); 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
                     "Failed", JOptionPane.ERROR_MESSAGE); 
-             }
+             } 
              updateDisplay();
         }
     }
 
-    public void onSaveShelterAsClick() {    
-    	File filename = new File(shelter.getFilename());     
-        final JFileChooser fc = new JFileChooser(filename); 
+    public void onSaveShelterClick() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(shelter.getFilename())))) {
+            // bw.write(MAGIC_COOKIE + '\n');
+            // bw.write(FILE_VERSION + '\n');
+            shelter.save(bw);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open " + shelter.getFilename() + '\n' + e,
+                "Failed", JOptionPane.ERROR_MESSAGE); 
+        }
+    }
+
+    public void onSaveShelterAsClick() {
+        File filename = new File(shelter.getFilename());
+        final JFileChooser fc = new JFileChooser(filename);
         FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
-        fc.addChoosableFileFilter(massFiles);
-        fc.setFileFilter(massFiles);       
+        fc.addChoosableFileFilter(massFiles); 
+        fc.setFileFilter(massFiles);
         
-        int result = fc.showSaveDialog(this);        
+        int result = fc.showSaveDialog(this);
+        // Also available: CANCEL_OPTION and ERROR_OPTION
         if (result == JFileChooser.APPROVE_OPTION) { 
             filename = fc.getSelectedFile();
             if(!filename.getAbsolutePath().endsWith(".mass"))
                 filename = new File(filename.getAbsolutePath() + ".mass");
-            onSaveShelterClick();
-        }
+            shelter.setFilename(filename.getAbsolutePath());
+            onSaveShelterClick(); 
+        }    
     }
 
 	public static void main(String[] args) {
