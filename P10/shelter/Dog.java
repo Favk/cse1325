@@ -14,6 +14,17 @@ public class Dog extends Animal{
         this.breed = breed;
     }
 
+    public Dog(BufferedReader br) throws IOException{
+        super(br);
+        breed = DogBreed.valueOf(br.readLine());
+    }
+
+    @Override
+    public void save(BufferedWriter bw) throws IOException {  
+        super.save(bw); 
+        bw.write("" + breed.name() + '\n');
+    }
+
     @Override
     public String family(){
         return "dog";
@@ -22,20 +33,6 @@ public class Dog extends Animal{
     @Override
     public String breed(){
         return breed.toString();
-    }
-
-    public Dog(BufferedReader br) throws IOException{
-        super(br);
-        dogFamily = br.readLine();
-        breed = DogBreed.valueOf(br.readLine());
-    }
-
-    public void save(BufferedWriter bw) throws IOException {  
-        bw.write("" + dogFamily + '\n');  
-        bw.write("" + name + '\n');
-        bw.write("" + gender.name() + '\n');
-        bw.write("" + age + '\n');
-        bw.write("" + breed.name() + '\n');
     }
 
     @Override

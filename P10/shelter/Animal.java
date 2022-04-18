@@ -21,7 +21,7 @@ abstract class Animal{
 
     public abstract String family();
     public abstract String breed();
-    public abstract create(Object breed, Strign name, Gender gender, int age);
+    //public abstract void create(Object breed, String name, Gender gender, int age);
 
     public Animal(BufferedReader br) throws IOException{
         name = br.readLine();
