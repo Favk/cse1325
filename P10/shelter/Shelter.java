@@ -11,11 +11,16 @@ public class Shelter{
     ArrayList<Animal> animals = new ArrayList<Animal>();
     ArrayList<Client> clients = new ArrayList<Client>();
 
+    int age = 0;
+    Gender gender;
+    Object breed;
+
     public Shelter(String name){
         this.name = name;
     }
 
     public void addAnimal(Animal animal){
+        animal.create(breed, name, gender, age);
         animals.add(animal);
     }
 
