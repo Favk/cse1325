@@ -1,3 +1,3 @@
 package shelter;
 
-public enum Gender{female, male};
+public enum Gender{Male, Female};
