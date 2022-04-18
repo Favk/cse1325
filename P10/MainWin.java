@@ -111,6 +111,7 @@ public class MainWin extends JFrame {
 	private Shelter shelter = new Shelter("Mavs Animal Shelter");
     private JLabel data;
     private File filename;
+    private enum DataView{ANIMALS, CLIENTS};
 
     private String NAME = "Mass";
     private String VERSION = "1.4J";
@@ -359,9 +360,11 @@ public class MainWin extends JFrame {
 
     	JLabel artists = new JLabel("<html>"
     	+ "<p><font size=+2>Mavs Animal Shelter Software</font></p>"
-    	+ "<p>Version 1.0</p>"
+    	+ "<p>Version 1.2</p>"
     	+ "<p>Copyright 2022 by Kolade Favour</p>"
     	+ "<p>Licensed under Gnu GPL 3.0</p>"
+    	+ "<p>Derived from Professor George F.</p>"
+    	+ "<p>Rice's MASS Suggested solution per the GPL License</p>"
     	+ "<p>https://cdn-prod.medicalnewstoday.com</p><p>/content/images/articles/322/322868/golden-retriever-puppy.jpg</p>"
     	+ "<p>https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/</p><p>VAN_CAT.png/220px-VAN_CAT.png</p>"
     	+ "<p>https://images.ctfassets.net/82d3r48zq721/45liwTLsDMSJt4N22RqrHX/</p><p>"
@@ -491,7 +494,11 @@ public class MainWin extends JFrame {
         }    
     }
 
-
+    public <T extends Animal> void newAnimal(T animal, JComboBox breeds){
+    	if (animal == Dog) {
+    		
+    	}
+    }
 
 	public static void main(String[] args) {
     	MainWin aWindow = new MainWin("Mavs Animal Shelter");
