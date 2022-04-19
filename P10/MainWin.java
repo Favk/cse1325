@@ -261,18 +261,6 @@ public class MainWin extends JFrame {
 	public void onQuitClick() {
 		System.exit(0);
 	}
-
-    private JLabel breed = new JLabel("Breed");
-
-    private JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-    private JTextField names = new JTextField(50);
-        
-    private JLabel gender = new JLabel("<HTML><br/>Gender</HTML>");
-    private JComboBox genders = new JComboBox(Gender.values());
-        
-    private JLabel age = new JLabel("<HTML><br/>Age</HTML>");
-    private SpinnerModel range = new SpinnerNumberModel(0, 0, 100, 1);
-    private JSpinner ages = new JSpinner(range);
         
     protected void onNewDogClick() { 
         JComboBox breeds = new JComboBox<DogBreed>(DogBreed.values());
@@ -445,6 +433,8 @@ public class MainWin extends JFrame {
 
     private <T extends Animal> void newAnimal(T animal, JComboBox breeds){
     	JLabel breed = new JLabel("Breed");
+        breeds = breeds;
+
 		JLabel name = new JLabel("<HTML><br/>Name</HTML>");
 	    JTextField names = new JTextField(50);
 	        
@@ -455,7 +445,7 @@ public class MainWin extends JFrame {
 	    SpinnerModel range = new SpinnerNumberModel(0, 0, 100, 1);
 	    JSpinner ages = new JSpinner(range);
 
-	    Object[] objects = { breed, breeds, name, names, gender, genders, age, ages};
+	    Object[] objects = {breed, breeds, name, names, gender, genders, age, ages};
         
         int button = JOptionPane.showConfirmDialog(
             this,
@@ -464,10 +454,11 @@ public class MainWin extends JFrame {
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.QUESTION_MESSAGE);
         if(button == JOptionPane.OK_OPTION){
+                System.out.println("Breed before create: " + breeds.getSelectedItem()); 
         	animal.create(breeds.getSelectedItem(), names.getText(), (Gender) genders.getSelectedItem(), (int) ages.getValue());
         	shelter.addAnimal(animal);
+            updateDisplay(DataView.ANIMALS);
         }
-        updateDisplay(DataView.ANIMALS);
     }
 
 	public static void main(String[] args) {
