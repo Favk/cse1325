@@ -22,9 +22,10 @@ public class Dog extends Animal {
     }
 
     @Override
-    public void create(Object breed, String name, Gender gender, int age){
-        System.out.println("Breed in create: " + breed.toString());         
-        this.breed = (DogBreed) breed; 
+    public void create(Object breeds, String name, Gender gender, int age){
+        System.out.println("Breed in create: " + (DogBreed)breeds);         
+        this.breed = (DogBreed) breeds; 
+        System.out.println("Breed in create after override: " + (DogBreed)breeds);  
         this.name = name;
         this.gender = gender;
         this.age = age;
