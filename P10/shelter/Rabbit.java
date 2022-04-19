@@ -18,17 +18,11 @@ public class Rabbit extends Animal{
         breed = RabbitBreed.valueOf(br.readLine());
     }
 
-    public Rabbit() {
+    public Rabbit(){
         this(RabbitBreed.Mix, "Default", Gender.Female, 0);
     }
 
     @Override
-    public void save(BufferedWriter bw) throws IOException {  
-        super.save(bw);
-        bw.write("" + breed.name() + '\n');
-    }
-
-    
     public void create(Object breed, String name, Gender gender, int age){
         this.name = name;
         this.gender = gender;
@@ -37,18 +31,23 @@ public class Rabbit extends Animal{
     }
 
     @Override
-    public String family(){
-        return "Rabbit";
-    }
-    
-    @Override
-    public String breed(){
-        return breed.toString();
+    public void save(BufferedWriter bw) throws IOException {
+        super.save(bw);
+        bw.write(breed.name() + '\n');
     }
 
     @Override
-    public String toString(){
-        return name + " is a " + gender + " " + breed() + " " + family() + " and is " + age + " years old";
+    public String family() {
+        return "rabbit";
     }
-    
+
+    @Override
+    public String breed() {
+        return breed.name();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + breed.name() + " rabbit)";
+    }
 }

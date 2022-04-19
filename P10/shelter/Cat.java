@@ -22,6 +22,7 @@ public class Cat extends Animal{
         this(CatBreed.Mix, "Default", Gender.Female, 0);
     }
 
+    @Override
     public void create(Object breed, String name, Gender gender, int age){
         this.name = name;
         this.gender = gender;
@@ -30,23 +31,23 @@ public class Cat extends Animal{
     }
 
     @Override
-    public void save(BufferedWriter bw) throws IOException {  
+    public void save(BufferedWriter bw) throws IOException {
         super.save(bw);
-        bw.write("" + breed.name() + '\n');
+        bw.write(breed.name() + '\n');
     }
 
     @Override
-    public String family(){
+    public String family() {
         return "cat";
     }
-    
+
     @Override
-    public String breed(){
-        return breed.toString();
+    public String breed() {
+        return breed.name();
     }
 
     @Override
-    public String toString(){
-        return name + " is a " + gender + " " + breed() + " " + family() + " and is " + age + " years old";
+    public String toString() {
+        return super.toString() + " " + breed.name() + " cat)";
     }
 }
