@@ -18,11 +18,14 @@ public class Cat extends Animal{
         breed = CatBreed.valueOf(br.readLine());
     }
 
-    public Cat(){}
+    public Cat(){
+        this(CatBreed.Mix, "Default", Gender.female, 0);
+    }
 
-    @Override
     public void create(Object breed, String name, Gender gender, int age){
-        super.create(breed, name, gender, age);
+        super.name = name;
+        super.gender = gender;
+        super.age = age;
         this.breed = (CatBreed)breed;
     }
 

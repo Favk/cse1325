@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-abstract class Animal{
+public abstract class Animal{
     protected String name;
     protected Gender gender;
     protected int age = 0;
+
+    public Animal(){}
 
     public Animal(String name, Gender gender, int age){
         this.name = name;
@@ -21,18 +23,7 @@ abstract class Animal{
 
     public abstract String family();
     public abstract String breed();
-
-    public Animal(){}
-
-    public void create(Object breed, String name, Gender gender, int age){
-        this.name = name;
-        this.gender = gender;
-        this.age = age;
-
-        if(age <= 0){
-            throw new IllegalArgumentException("Age cannot be negative " + age);
-        }
-    }
+    public abstract void create(Object breed, String name, Gender gender, int age);
 
     public Animal(BufferedReader br) throws IOException{
         name = br.readLine();
