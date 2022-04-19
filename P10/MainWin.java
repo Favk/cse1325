@@ -212,6 +212,9 @@ public class MainWin extends JFrame {
     	toolbar.add(saveAsButton);
     	saveAsButton.addActionListener(event -> onSaveShelterAsClick());
 
+    	toolbar.addSeparator();
+    	toolbar.addSeparator();
+
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
     	dogButton.setToolTipText("Add a new dog, include name, age, breed and gender");
@@ -227,6 +230,16 @@ public class MainWin extends JFrame {
     	catButton.setBorder(null);
     	toolbar.add(catButton);
     	catButton.addActionListener(event -> onNewCatClick());
+
+    	JButton rabbitButton = new JButton(new ImageIcon("rabbit.jpg"));
+    	rabbitButton.setActionCommand("Add a new rabbit");
+    	rabbitButton.setToolTipText("Add a new rabbit, include name, age, breed and gender");
+    	rabbitButton.setBorder(null);
+    	toolbar.add(rabbitButton);
+    	rabbitButton.addActionListener(event -> onNewRabbitClick());
+
+    	toolbar.addSeparator();
+    	toolbar.addSeparator();
 
     	JButton clientButton = new JButton(new ImageIcon("client.jpg"));
     	clientButton.setActionCommand("Add a new client");
@@ -505,7 +518,7 @@ public class MainWin extends JFrame {
         }    
     }
 
-    private void newAnimal <T extends Animal> (T animal, JComboBox breeds){
+    /*private void newAnimal <T extends Animal> (T animal, JComboBox breeds){
     	if (animal == Dog) {
     		onNewDogClick();
     	}
@@ -515,7 +528,7 @@ public class MainWin extends JFrame {
     	if (animal == Rabbit){
     		onNewRabbitClick();
     	}
-    }
+    }*/
 
 	public static void main(String[] args) {
     	MainWin aWindow = new MainWin("Mavs Animal Shelter");
