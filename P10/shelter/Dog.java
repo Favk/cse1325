@@ -7,25 +7,27 @@ import java.io.IOException;
 public class Dog extends Animal {
     private DogBreed breed;
 
+    public Dog() {
+        this(DogBreed.Mix, "Default", Gender.Female, 0);
+    }
+
     public Dog(DogBreed breed, String name, Gender gender, int age) {
         super(name, gender, age);
         this.breed = breed;
-    }
-
-    public Dog() {
-        this(DogBreed.Mix, "Default", Gender.Female, 0);
     }
 
     public Dog(BufferedReader br) throws IOException {
         super(br);
         breed = DogBreed.valueOf(br.readLine());
     }
+
     @Override
     public void create(Object breed, String name, Gender gender, int age){
+        System.out.println("Breed in create: " + breed.toString());         
+        this.breed = (DogBreed) breed; 
         this.name = name;
         this.gender = gender;
         this.age = age;
-        this.breed = (DogBreed)breed;
     }
 
     @Override
@@ -41,11 +43,11 @@ public class Dog extends Animal {
 
     @Override
     public String breed() {
-        return breed.name();
+        return breed.toString();
     }
 
     @Override
     public String toString() {
-        return super.toString() + " " + breed.name() + " dog)";
+        return super.toString() + " " + breed() + " dog)";
     }
 }

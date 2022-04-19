@@ -32,18 +32,6 @@ public abstract class Animal {
     public abstract String breed();
     public abstract void create(Object breed, String name, Gender gender, int age);
 
-    public String name() {
-        return name;
-    }
-
-    public Gender gender() {
-        return gender;
-    }
-
-    public int age() {
-        return age;
-    }
-
     public String toString() {
         return name + " (" + age + " year old " + gender;
     }
