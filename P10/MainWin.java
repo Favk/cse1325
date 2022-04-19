@@ -450,7 +450,6 @@ public class MainWin extends JFrame {
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.QUESTION_MESSAGE);
         if(button == JOptionPane.OK_OPTION){
-            System.out.println("Breed before create: " + (DogBreed)breeds.getSelectedItem()); 
         	animal.create(breeds.getSelectedItem(), names.getText(), (Gender) genders.getSelectedItem(), (int) ages.getValue());
         	shelter.addAnimal(animal);
             updateDisplay(DataView.ANIMALS);
