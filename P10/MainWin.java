@@ -263,17 +263,15 @@ public class MainWin extends JFrame {
 	}
         
     protected void onNewDogClick() { 
-        newAnimal(new Dog(),new JComboBox(DogBreed.values()));
+        newAnimal(new Dog(),new JComboBox<>(DogBreed.values()));
     }
             
     protected void onNewCatClick() { 
-        JComboBox breeds = new JComboBox<CatBreed>(CatBreed.values());
-        newAnimal(new Cat(), breeds);
+        newAnimal(new Cat(), new JComboBox<>(CatBreed.values()));
     }
 
 	public void onNewRabbitClick() {
-        JComboBox breeds = new JComboBox<RabbitBreed>(RabbitBreed.values());
-        newAnimal(new Rabbit(), breeds);
+        newAnimal(new Rabbit(), new JComboBox<>(RabbitBreed.values()));
 	}
 
 	public void onAboutClick() {
