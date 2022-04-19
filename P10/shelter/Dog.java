@@ -19,7 +19,7 @@ public class Dog extends Animal{
     }
 
     public Dog(){
-        this(DogBreed.Mix, "Default", Gender.female, 0);
+        this(DogBreed.Mix, "Default", Gender.Female, 0);
     }
 
     @Override
@@ -29,9 +29,9 @@ public class Dog extends Animal{
     }
 
     public void create(Object breed, String name, Gender gender, int age){
-        super.name = name;
-        super.gender = gender;
-        super.age = age;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
         this.breed = (DogBreed)breed;
     }
 

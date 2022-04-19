@@ -19,13 +19,13 @@ public class Cat extends Animal{
     }
 
     public Cat(){
-        this(CatBreed.Mix, "Default", Gender.female, 0);
+        this(CatBreed.Mix, "Default", Gender.Female, 0);
     }
 
     public void create(Object breed, String name, Gender gender, int age){
-        super.name = name;
-        super.gender = gender;
-        super.age = age;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
         this.breed = (CatBreed)breed;
     }
 
