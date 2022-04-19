@@ -18,6 +18,8 @@ public class Dog extends Animal{
         breed = DogBreed.valueOf(br.readLine());
     }
 
+    public Dog(){}
+
     @Override
     public void save(BufferedWriter bw) throws IOException {  
         super.save(bw); 

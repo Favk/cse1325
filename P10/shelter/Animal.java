@@ -22,6 +22,8 @@ abstract class Animal{
     public abstract String family();
     public abstract String breed();
 
+    public Animal(){}
+
     public void create(Object breed, String name, Gender gender, int age){
         this.name = name;
         this.gender = gender;

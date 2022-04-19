@@ -18,6 +18,8 @@ public class Cat extends Animal{
         breed = CatBreed.valueOf(br.readLine());
     }
 
+    public Cat(){}
+
     @Override
     public void create(Object breed, String name, Gender gender, int age){
         super.create(breed, name, gender, age);
