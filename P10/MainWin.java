@@ -153,7 +153,9 @@ public class MainWin extends JFrame {
 		dog.addActionListener(event -> onNewDogClick());
 		cat.addActionListener(event -> onNewCatClick());
 		rabbit.addActionListener(event -> onNewRabbitClick());
+		listAll.addActionListener(event -> updateDisplay());
 		newClient.addActionListener(event -> onNewClientCLick());
+		listClient.addActionListener(event -> updateClientDisplay());
 		newFile.addActionListener(event -> onNewShelterAsClick());
 		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
@@ -225,6 +227,13 @@ public class MainWin extends JFrame {
     	catButton.setBorder(null);
     	toolbar.add(catButton);
     	catButton.addActionListener(event -> onNewCatClick());
+
+    	JButton clientButton = new JButton(new ImageIcon("client.jpg"));
+    	clientButton.setActionCommand("Add a new client");
+    	clientButton.setToolTipText("Add a new client, include name and phone number");
+    	clientButton.setBorder(null);
+    	toolbar.add(clientButton);
+    	clientButton.addActionListener(event -> onNewClientCLick());
     	
     	toolbar.addSeparator();
 
@@ -372,6 +381,8 @@ public class MainWin extends JFrame {
     	+ "<p>https://encrypted-tbn0.gstatic.com/images?q=tbn</p><p>:ANd9GcR4rOgZhbSxMluMDlzbgxfuss7FloRKP1N3fQ&usqp=CAU</p>"
     	);
 
+
+
     	about.add(artists);
 
     	JButton ok = new JButton("OK");
@@ -494,9 +505,15 @@ public class MainWin extends JFrame {
         }    
     }
 
-    public <T extends Animal> void newAnimal(T animal, JComboBox breeds){
+    private void newAnimal <T extends Animal> (T animal, JComboBox breeds){
     	if (animal == Dog) {
-    		
+    		onNewDogClick();
+    	}
+    	if (animal == Cat){
+    		onNewCatClick();
+    	}
+    	if (animal == Rabbit){
+    		onNewRabbitClick();
     	}
     }
 
