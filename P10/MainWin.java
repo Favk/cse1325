@@ -460,7 +460,7 @@ public class MainWin extends JFrame {
         int button = JOptionPane.showConfirmDialog(
             this,
             objects,
-            "New Rabbit",
+            "New Animal",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.QUESTION_MESSAGE);
         if(button == JOptionPane.OK_OPTION){
