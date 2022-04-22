@@ -20,7 +20,6 @@ public class Shelter{
     }
 
     public void addAnimal(Animal animal){
-        animal.create(breed, name, gender, age);
         animals.add(animal);
     }
 
