@@ -1,6 +1,9 @@
 package shelter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ListIterator;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,6 +13,7 @@ public class Shelter{
     private String filename;
     ArrayList<Animal> animals = new ArrayList<Animal>();
     ArrayList<Client> clients = new ArrayList<Client>();
+    HashMap<Animal, CLient> = new HashMap<Animal, CLient>();
 
     int age = 0;
     Gender gender;
@@ -17,26 +21,6 @@ public class Shelter{
 
     public Shelter(String name){
         this.name = name;
-    }
-
-    public void addAnimal(Animal animal){
-        animals.add(animal);
-    }
-
-    public void addClient(Client client){
-        clients.add(client);
-    }
-
-    public int numAnimals(){
-        return animals.size();
-    }
-
-    public Animal getAnimal(int index){
-        if(index < 0){
-            throw new IllegalArgumentException("Index cannot be negative " + index);
-        }
-
-        return animals.get(index);
     }
 
     public Shelter(BufferedReader br) throws IOException{
@@ -67,15 +51,20 @@ public class Shelter{
         }
     }
 
-    @Override
-    public String toString(){
-        StringBuilder str = new StringBuilder();
+    public String getFilename(){
+        return filename;
+    }
 
-        for(Animal a : animals){
-            str.append("\n");
-            str.append(a.toString());
-        }
-        return str.toString();
+    public void setFilename(String filename){
+        this.filename = filename;
+    }
+
+    public void addClient(Client client){
+        clients.add(client);
+    }
+
+    public ListIterator<CLient> clientListIterator(){
+        return clients.listIterator();
     }
 
     public String clientsToString(){
@@ -88,11 +77,38 @@ public class Shelter{
         return person.toString();
     }
 
-    public String getFilename(){
-        return filename;
+    public void addAnimal(Animal animal){
+        animals.add(animal);
     }
 
-    public void setFilename(String filename){
-        this.filename = filename;
+    public ListIterator<Animal> AnimalListIterator(){
+        return animals.listIterator();
     }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+
+        for(Animal a : animals){
+            str.append("\n");
+            str.append(a.toString());
+        }
+        return str.toString();
+    }
+
+    public int numAnimals(){
+        return animals.size();
+    }
+
+    public Animal getAnimal(int index){
+        if(index < 0){
+            throw new IllegalArgumentException("Index cannot be negative " + index);
+        }
+
+        return animals.get(index);
+    }
+
+
+
+
 }
