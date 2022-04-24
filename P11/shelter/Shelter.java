@@ -13,7 +13,7 @@ public class Shelter{
     private String filename;
     private ArrayList<Animal> animals = new ArrayList<Animal>();
     private ArrayList<Client> clients = new ArrayList<Client>();
-    private HashMap<Animal, CLient> adoptions = new HashMap<Animal, CLient>();
+    private HashMap<Animal, Client> adoptions = new HashMap<Animal, Client>();
 
     int age = 0;
     Gender gender;
@@ -63,7 +63,7 @@ public class Shelter{
         clients.add(client);
     }
 
-    public ListIterator<CLient> clientListIterator(){
+    public ListIterator<Client> clientListIterator(){
         return clients.listIterator();
     }
 
