@@ -175,9 +175,11 @@ public class MainWin extends JFrame {
 		animal.add(cat);
 		animal.add(rabbit);
 		animal.add(listAll);
+		animal.add(listAdopted);
 
 		client.add(newClient);
 		client.add(listClient);
+		client.add(adoptAnimal);
 
 		help.add(about);
 
