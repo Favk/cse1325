@@ -11,9 +11,9 @@ import java.io.IOException;
 public class Shelter{
     private String name;
     private String filename;
-    ArrayList<Animal> animals = new ArrayList<Animal>();
-    ArrayList<Client> clients = new ArrayList<Client>();
-    HashMap<Animal, CLient> = new HashMap<Animal, CLient>();
+    private ArrayList<Animal> animals = new ArrayList<Animal>();
+    private ArrayList<Client> clients = new ArrayList<Client>();
+    private HashMap<Animal, CLient> adoptions = new HashMap<Animal, CLient>();
 
     int age = 0;
     Gender gender;
