@@ -372,6 +372,9 @@ public class MainWin extends JFrame {
     	if (view == DataView.CLIENTS) {
     		display = shelter.clientsToString();
     	}
+    	if (view == DataView.ADOPTIONS) {
+    		display = shelter.adoptionsToString();
+    	}
     	data.setText("<html>" +  display.replaceAll("<", "&lt;")
     									.replaceAll(">", "&gt;")
     									.replaceAll("\n", "<br/>")
