@@ -108,7 +108,9 @@ public class Shelter{
         return animals.get(index);
     }
 
-
+    public void adopt(Animal animal, Client client){
+        
+    }
 
 
 }
