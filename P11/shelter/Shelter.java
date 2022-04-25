@@ -108,9 +108,12 @@ public class Shelter{
         return animals.get(index);
     }
 
-    public void adopt(Animal animal, Client client){
-        
+    public adopt(Animal animal, Client client){
+        adoptions.put(animal, client);
     }
 
+    public ListIterator<Animal> adoptedAnimalListIterator(){
+        return animal.listiterator();
+    }
 
 }
