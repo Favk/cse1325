@@ -3,6 +3,7 @@ package shelter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
+import java.util.Iterator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,9 +16,8 @@ public class Shelter{
     private ArrayList<Client> clients = new ArrayList<Client>();
     private HashMap<Animal, Client> adoptions = new HashMap<Animal, Client>();
 
-    int age = 0;
-    Gender gender;
-    Object breed;
+    Animal animal;
+    Client client;
 
     public Shelter(String name){
         this.name = name;
@@ -108,12 +108,17 @@ public class Shelter{
         return animals.get(index);
     }
 
-    public adopt(Animal animal, Client client){
-        adoptions.put(animal, client);
+    public void adopt(Animal animal, Client client){
+        animals.remove(animal.getAnimal(index));
     }
 
-    public ListIterator<Animal> adoptedAnimalListIterator(){
-        return animal.listiterator();
+    public Iterator<Animal> adoptedAnimalListIterator(){
+        return adoptions.keySet().iterator();
     }
+
+    public String adoptionsToString(){
+        return animal.toString() + " to " + client.clientsToString();
+    }
+
 
 }
