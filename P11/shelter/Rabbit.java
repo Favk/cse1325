@@ -4,9 +4,11 @@ import shelter.RabbitBreed;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Rabbit extends Animal{
     private RabbitBreed breed;
+    Rabbit rabbit;
 
     public Rabbit(RabbitBreed breed, String name, Gender gender, int age){
         super(name, gender, age);
@@ -49,5 +51,21 @@ public class Rabbit extends Animal{
     @Override
     public String toString() {
         return super.toString() + " " + breed.name() + " rabbit)";
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null) return false;
+        if(this.getClass() != o.getClass()) return false;
+        Rabbit rabbit = (Rabbit) o;
+        return (breed.equals(rabbit.breed) && (age == rabbit.age) && (gender.equals(rabbit.gender)) && (name.equals(rabbit.name)));
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = 7;
+        hash = 31 * hash + (rabbit == null ? 0 : rabbit.hashCode());
+        return hash;
     }
 }

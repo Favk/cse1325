@@ -100,16 +100,9 @@ public class Shelter{
         return animals.size();
     }
 
-    public Animal getAnimal(int index){
-        if(index < 0){
-            throw new IllegalArgumentException("Index cannot be negative " + index);
-        }
-
-        return animals.get(index);
-    }
-
     public void adopt(Animal animal, Client client){
-        animals.remove(animal.getAnimal(index));
+        animals.remove(animal);
+        adoptions.put(animal, client);
     }
 
     public Iterator<Animal> adoptedAnimalListIterator(){
@@ -117,7 +110,7 @@ public class Shelter{
     }
 
     public String adoptionsToString(){
-        return animal.toString() + " to " + client.clientsToString();
+        return animal.toString() + " to " ;
     }
 
 
