@@ -108,6 +108,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
+import java.util.ListIterator;
+
 public class MainWin extends JFrame {
 	private Shelter shelter = new Shelter("Mavs Animal Shelter");
     private JLabel data;
@@ -381,58 +383,64 @@ public class MainWin extends JFrame {
     							+ "</html>");
     }
 
-        public void onSaveShelterClick() {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-                bw.write(MAGIC_COOKIE + '\n');
-                bw.write(FILE_VERSION + '\n');
+	public void onSaveShelterClick() {
+    	try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            bw.write(MAGIC_COOKIE + '\n');
+            bw.write(FILE_VERSION + '\n');
 
-                shelter.save(bw);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
-                    "Failed", JOptionPane.ERROR_MESSAGE); 
+            shelter.save(bw);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e, "Failed", JOptionPane.ERROR_MESSAGE); 
             }
         }
 
-        public void onOpenShelterClick() {
-            final JFileChooser fc = new JFileChooser(filename);
-            FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
-            fc.addChoosableFileFilter(massFiles);         
-            fc.setFileFilter(massFiles);
+    public void onOpenShelterClick() {
+        final JFileChooser fc = new JFileChooser(filename);
+        FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(massFiles);         
+    	fc.setFileFilter(massFiles);
             
-            int result = fc.showOpenDialog(this);        
-            if (result == JFileChooser.APPROVE_OPTION) {
-                filename = fc.getSelectedFile();        
+        int result = fc.showOpenDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            filename = fc.getSelectedFile();        
                 
-                try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-                    String magicCookie = br.readLine();
-                    if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
-                    String fileVersion = br.readLine();
-                    if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
-                    
-                    shelter = new Shelter(br);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
-                        "Failed", JOptionPane.ERROR_MESSAGE); 
-                 }
-                 updateDisplay(DataView.ANIMALS);
-            }
+	    	try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+	            String magicCookie = br.readLine();
+	                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
+	                String fileVersion = br.readLine();
+	                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
+	                    
+	                shelter = new Shelter(br);
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, "Failed", JOptionPane.ERROR_MESSAGE); 
+	                }
+	                updateDisplay(DataView.ANIMALS);
+	            }
         }
 
-        public void onSaveShelterAsClick() {         
-            final JFileChooser fc = new JFileChooser(filename); 
-            FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
-            fc.addChoosableFileFilter(massFiles);
-            fc.setFileFilter(massFiles);       
+    public void onSaveShelterAsClick() {         
+    	final JFileChooser fc = new JFileChooser(filename); 
+        FileFilter massFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(massFiles);
+        fc.setFileFilter(massFiles);       
             
-            int result = fc.showSaveDialog(this);        
-            if (result == JFileChooser.APPROVE_OPTION) { 
-                filename = fc.getSelectedFile();
-                if(!filename.getAbsolutePath().endsWith(".mass"))
-                    filename = new File(filename.getAbsolutePath() + ".mass");
-                onSaveShelterClick();
+        int result = fc.showSaveDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) { 
+            filename = fc.getSelectedFile();
+        	if(!filename.getAbsolutePath().endsWith(".mass"))
+                filename = new File(filename.getAbsolutePath() + ".mass");
+            onSaveShelterClick();
             }
-        }
+    }
 
+    public void onAdoptClick(){
+    	JLabel animal = new JLabel("<HTML><br/>Animal</HTML>");
+    	JComboBox<Animal> tAnimal = new JComboBox<Animal>();
+    	JLabel clientele = new JLabel("<HTML><br/>Client</HTML>");
+    	JComboBox<Client> tClient = new JComboBox<Client>();
+
+    	ListIterator<Client> cl = shelter.client.listIterator();
+    }
 
     private <T extends Animal> void newAnimal(T animal, JComboBox breeds){
     	JLabel breed = new JLabel("Breed");
