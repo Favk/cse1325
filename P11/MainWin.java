@@ -312,8 +312,6 @@ public class MainWin extends JFrame {
     	+ "<p>https://encrypted-tbn0.gstatic.com/images?q=tbn</p><p>:ANd9GcR4rOgZhbSxMluMDlzbgxfuss7FloRKP1N3fQ&usqp=CAU</p>"
     	);
 
-
-
     	about.add(artists);
 
     	JButton ok = new JButton("OK");
@@ -344,7 +342,6 @@ public class MainWin extends JFrame {
 
     public void onNewClientCLick(){
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(900, 900);
 
 		JTextField clientName;
 		JTextField clientNumber;
@@ -414,8 +411,8 @@ public class MainWin extends JFrame {
 	        } catch (Exception e) {
 	            JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, "Failed", JOptionPane.ERROR_MESSAGE); 
 	                }
-	                updateDisplay(DataView.ANIMALS);
 	            }
+	        updateDisplay(DataView.ANIMALS);	            
         }
 
     public void onSaveShelterAsClick() {         
@@ -436,10 +433,26 @@ public class MainWin extends JFrame {
     public void onAdoptClick(){
     	JLabel animal = new JLabel("<HTML><br/>Animal</HTML>");
     	JComboBox<Animal> tAnimal = new JComboBox<Animal>();
+    	ListIterator<Animal> aniMal = animals.listIterator();
+    	while(aniMal.hasNext()){
+    		tAnimal.addItem(aniMal.next());
+    	}
     	JLabel clientele = new JLabel("<HTML><br/>Client</HTML>");
     	JComboBox<Client> tClient = new JComboBox<Client>();
 
-    	ListIterator<Client> cl = shelter.client.listIterator();
+    	Object[] objects = {animal, tAnimal, clientele, tClient};
+        
+        int button = JOptionPane.showConfirmDialog(
+            this,
+            objects,
+            "New Animal",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+        if(button == JOptionPane.OK_OPTION){
+        	shelter.adopt((Animal)tAnimal.getSelectedItem(), (Client)tClient.getSelectedItem());
+            updateDisplay(DataView.ADOPTIONS);
+        }
+
     }
 
     private <T extends Animal> void newAnimal(T animal, JComboBox breeds){
