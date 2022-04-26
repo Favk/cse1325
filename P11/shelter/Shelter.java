@@ -121,6 +121,6 @@ public class Shelter{
     }
 
     public String adoptionsToString(){
-        return animal.toString() + " to " + client.clientsToString();
+        return animal.toString() + " to " + (String)client.clientsToString();
     }
 }
