@@ -109,6 +109,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 import java.util.ListIterator;
+import java.util.Arrays;
 
 public class MainWin extends JFrame {
 	private Shelter shelter = new Shelter("Mavs Animal Shelter");
@@ -432,13 +433,14 @@ public class MainWin extends JFrame {
 
     public void onAdoptClick(){
     	JLabel animal = new JLabel("<HTML><br/>Animal</HTML>");
-    	JComboBox<Animal> tAnimal = new JComboBox<Animal>();
-    	ListIterator<Animal> aniMal = animals.listIterator();
-    	while(aniMal.hasNext()){
-    		tAnimal.addItem(aniMal.next());
-    	}
+    	Animal[] aniMal = new Animal[shelter.numAnimals()];
+    	shelter.animalListIterator();
+    	JComboBox<Animal> tAnimal = new JComboBox<Animal>(aniMal);
+
     	JLabel clientele = new JLabel("<HTML><br/>Client</HTML>");
-    	JComboBox<Client> tClient = new JComboBox<Client>();
+    	Client[] aClient = new Client[shelter.numClient()];
+    	shelter.clientListIterator();
+    	JComboBox<Client> tClient = new JComboBox<Client>(aClient);
 
     	Object[] objects = {animal, tAnimal, clientele, tClient};
         
