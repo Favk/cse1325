@@ -63,6 +63,10 @@ public class Shelter{
         clients.add(client);
     }
 
+    public int numClient(){
+        return clients.size();
+    }
+
     public ListIterator<Client> clientListIterator(){
         return clients.listIterator();
     }
@@ -106,11 +110,18 @@ public class Shelter{
     }
 
     public Iterator<Animal> adoptedAnimalListIterator(){
+        for(Animal key : adoptions.keySet()){
+            System.out.println(key + " = " + adoptions.get(key));
+        }
         return adoptions.keySet().iterator();
     }
 
+    public void getAdoptedClient(Animal animal){
+        adoptions.get(client);
+    }
+
     public String adoptionsToString(){
-        return animal.toString() + " to " ;
+        return animal.toString() + " to ";
     }
 
 
