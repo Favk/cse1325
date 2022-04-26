@@ -85,7 +85,7 @@ public class Shelter{
         animals.add(animal);
     }
 
-    public ListIterator<Animal> AnimalListIterator(){
+    public ListIterator<Animal> animalListIterator(){
         return animals.listIterator();
     }
 
@@ -121,8 +121,6 @@ public class Shelter{
     }
 
     public String adoptionsToString(){
-        return animal.toString() + " to ";
+        return animal.toString() + " to " + client.clientsToString();
     }
-
-
 }
