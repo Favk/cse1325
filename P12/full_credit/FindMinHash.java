@@ -25,6 +25,13 @@ public class FindMinHash {
         public final int value;
     }
 
+    public synchronized long getPacket(final long maxHashes) {
+        index += 100;
+        if (index >= maxHashes) return -1;
+
+        return index;
+    }
+
     public void findMinHashSlice(int numThreads, long maxHashes) {        
         Thread[] threads = new Thread[numThreads];
 
@@ -81,13 +88,6 @@ public class FindMinHash {
                          + String.format("%,d", bestWord.hashCode()));
 
     }
-
-    public synchronized long getPacket(final long maxHashes) {
-        index += 100;
-        if (index >= maxHashes) return -1;
-
-        return index;
-    }
     
     // This constructor loads the word list needed by class WordWrapper
     public FindMinHash(String filename) throws IOException {
@@ -135,11 +135,11 @@ public class FindMinHash {
         }
 
         final long maxHashes = Long.parseLong(args[0]);
-        final int numThreads = Integer.parseInt(args[1]);
 
         FindMinHash f = null;
 
         // Include a program argument here for number of threads (numThreads)
+        final int numThreads = Integer.parseInt(args[1]);
 
         try {
             f = new FindMinHash((args.length > 2) ? args[2] : "all-words.txt");
