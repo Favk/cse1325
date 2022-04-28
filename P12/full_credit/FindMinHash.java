@@ -24,6 +24,70 @@ public class FindMinHash {
         public final String word;
         public final int value;
     }
+
+    public void findMinHashSlice(int numThreads, long maxHashes) {        
+        Thread[] threads = new Thread[numThreads];
+
+        long begin = 0;
+        long steps = maxHashes/numThreads;
+
+        for (int i = 0; i < numThreads; ++i) {
+            if (i == numThreads - 1) steps = maxHashes - begin;
+            final long start = begin;
+            final long step = steps - 1;
+            threads[i] = new Thread(() -> search(start, step));
+            threads[i].start();
+            begin += steps;          
+        }
+
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception");
+            }
+        }
+
+        System.out.println("Best word \"" + bestWord.word + "\" has hashCode " 
+                         + String.format("%,d", bestWord.hashCode()));
+    }
+
+    public void findMinHashPool(int numThreads, long maxHashes) {
+        Thread[] threads = new Thread[numThreads];
+
+        for (int i = 0; i < numThreads; ++i) {
+            threads[i] = new Thread(() -> {
+                while (true) {
+                    long start = getPacket(maxHashes);
+                    if (start == -1) break;
+                    long step = (maxHashes < start + 100) ? 
+                                maxHashes - start - 1: 99;
+                    this.search(start, step);
+                }                
+            });
+
+            threads[i].start();       
+        }
+
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception");
+            }
+        }
+
+        System.out.println("Best word \"" + bestWord.word + "\" has hashCode " 
+                         + String.format("%,d", bestWord.hashCode()));
+
+    }
+
+    public synchronized long getPacket(final long maxHashes) {
+        index += 100;
+        if (index >= maxHashes) return -1;
+
+        return index;
+    }
     
     // This constructor loads the word list needed by class WordWrapper
     public FindMinHash(String filename) throws IOException {
@@ -57,7 +121,7 @@ public class FindMinHash {
     }
     
     // Be sure to protect this method from thread interference!
-    public int setBestWord(WordWrapper candidate) {
+    public synchronized int setBestWord(WordWrapper candidate) {
         if(candidate.hashCode() < bestWord.hashCode()) bestWord = candidate;
         return bestWord.hashCode();
     }
@@ -65,52 +129,29 @@ public class FindMinHash {
     // Main provides the user interface. The majority of changes will be made
     //   to this method.
     public static void main(String[] args) {
-        if(1 > args.length || args.length > 2) {
-            System.err.println("usage: java FindMinHash <#strings> [filename]");
+        if(2 > args.length || args.length > 3) {
+            System.err.println("usage: java FindMinHash <#strings> <#threads> [filename]");
             System.exit(-1);
         }
 
         final long maxHashes = Long.parseLong(args[0]);
         final int numThreads = Integer.parseInt(args[1]);
-        
-        // Include a program argument here for number of threads (numThreads)
-        
+
         FindMinHash f = null;
+
+        // Include a program argument here for number of threads (numThreads)
+
         try {
-            f = new FindMinHash((args.length > 1) ? args[1] : "all-words.txt");
+            f = new FindMinHash((args.length > 2) ? args[2] : "all-words.txt");
         } catch(IOException e) {
             System.err.println(e.getMessage());
             System.exit(-2);            
         }
-        final FindMinHash findMinHash = f; // must be final to use in a lambda
-        Thread[] threads = new Thread[numThreads];
 
-        long start1 = 0;
-        long step1 = maxHashes/numThreads;
-
-        for (int i = 0; i < numThreads; ++i) {
-            if (i == numThreads - 1) step1 = maxHashes - start1;
-            final long start = start1;
-            final long step = step1 - 1;
-            threads[i] = new Thread(() -> findMinHash.search(start, step));
-            threads[i].start();
-            start1 += step1;          
-        }
-
-        for(Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Interrupted Exception");
-            }
-        }
-
-        // Reolace this single line with code creating your threads
-        findMinHash.search(0, maxHashes);
-        
-        System.out.println("Best word \"" + findMinHash.bestWord.word + "\" has hashCode " 
-                         + String.format("%,d", findMinHash.bestWord.hashCode()));
+        //f.findMinHashPool(numThreads, maxHashes);
+        f.findMinHashSlice(numThreads, maxHashes);      
     }
+    private long index = -100l; 
     private WordWrapper bestWord = new WordWrapper();
     private final ArrayList<String> wordList= new ArrayList<>();
 }
