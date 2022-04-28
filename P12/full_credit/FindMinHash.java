@@ -71,7 +71,8 @@ public class FindMinHash {
         }
 
         final long maxHashes = Long.parseLong(args[0]);
-
+        final int numThreads = Integer.parseInt(args[1]);
+        
         // Include a program argument here for number of threads (numThreads)
         
         FindMinHash f = null;
@@ -82,6 +83,27 @@ public class FindMinHash {
             System.exit(-2);            
         }
         final FindMinHash findMinHash = f; // must be final to use in a lambda
+        Thread[] threads = new Thread[numThreads];
+
+        long start1 = 0;
+        long step1 = maxHashes/numThreads;
+
+        for (int i = 0; i < numThreads; ++i) {
+            if (i == numThreads - 1) step1 = maxHashes - start1;
+            final long start = start1;
+            final long step = step1 - 1;
+            threads[i] = new Thread(() -> findMinHash.search(start, step));
+            threads[i].start();
+            start1 += step1;          
+        }
+
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception");
+            }
+        }
 
         // Reolace this single line with code creating your threads
         findMinHash.search(0, maxHashes);
