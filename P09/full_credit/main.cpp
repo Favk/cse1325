@@ -7,8 +7,12 @@ int main(){
 	int blue = 0;
 
 	Color utBlue {0, 100, 177};
+	Color white {255, 255, 255};
+	Color bash {100, 255, 23};
 
 	std::cout << utBlue.colorize("UTA BLUE") << std::endl;
+	std::cout << white.colorize("WHITE") << std::endl;
+	std::cout << bash.colorize("BASH") << std::endl;
 
 	std::cout << "Enter red, green and blue colors: ";
 	std::cin >> red >> green >> blue;
