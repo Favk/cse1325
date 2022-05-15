@@ -16,9 +16,6 @@ public class Shelter{
     private ArrayList<Client> clients = new ArrayList<Client>();
     private HashMap<Animal, Client> adoptions = new HashMap<Animal, Client>();
 
-    Animal animal;
-    Client client;
-
     public Shelter(String name){
         this.name = name;
     }
@@ -109,15 +106,12 @@ public class Shelter{
         adoptions.put(animal, client);
     }
 
-    public Iterator<Animal> adoptedAnimalListIterator(){
-        for(Animal key : adoptions.keySet()){
-            System.out.println(key + " = " + adoptions.get(key));
-        }
+    Iterator<Animal> adoptedAnimalListIterator(){
         return adoptions.keySet().iterator();
     }
 
-    public void getAdoptedClient(Animal animal){
-        adoptions.get(client);
+    Client getAdoptedClient(Animal animal){
+        return adoptions.get(client);
     }
 
     public String adoptionsToString(){
