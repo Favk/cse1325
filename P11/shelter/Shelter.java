@@ -16,35 +16,71 @@ public class Shelter{
     private ArrayList<Client> clients = new ArrayList<Client>();
     private HashMap<Animal, Client> adoptions = new HashMap<Animal, Client>();
 
-    public Shelter(String name){
+    private static final String cat = (new Cat()).family();
+    private static final String dog = (new Dog()).family();
+    private static final String rabbit  = (new Rabbit()).family();
+
+    public Shelter(String name) {
         this.name = name;
+        this.filename = "Untitled.mass";
+        animals = new ArrayList<>();
+        clients = new ArrayList<>();
+        adoptions = new HashMap<>();
+    }
+    public String getName() {
+        return name;
+    }
+    
+    private Animal readAnimal(BufferedReader br) throws IOException {
+        String f = br.readLine();
+        if(f.equals(cat)) return new Cat(br);
+        else if(f.equals(dog)) return new Dog(br);
+        else if(f.equals(rabbit)) return new Rabbit(br);
+        else throw new IOException("Invalid family: " + f);
+    }
+    private void writeAnimal(BufferedWriter bw, Animal a) throws IOException {
+        bw.write(a.family() + '\n');
+        a.save(bw);
     }
 
     public Shelter(BufferedReader br) throws IOException{
         this(br.readLine());
 
-        String familyName;
-        filename = br.readLine();
-        for(Animal a : animals){
-            familyName = br.readLine();
-            if(familyName == "dog"){
-                addAnimal(new Dog(br));
-            }
-            if(familyName == "cat"){
-                addAnimal(new Cat(br));
-            }
-            if(familyName == "rabbit"){
-                addAnimal(new Rabbit(br));
-            }
+        int numAnimals = Integer.parseInt(br.readLine());
+        while(numAnimals-- > 0) {
+            animals.add(readAnimal(br));
+        }
+
+        int numClients = Integer.parseInt(br.readLine());
+        while(numClients-- > 0) {
+            clients.add(new Client(br));
+        }
+
+        int numAdoptions = Integer.parseInt(br.readLine());
+        while(numAdoptions-- > 0) {
+            Animal a = readAnimal(br);
+            int index = Integer.parseInt(br.readLine());
+            adoptions.put(a, clients.get(index));
         }
     }
 
     public void save(BufferedWriter bw) throws IOException{
         bw.write("" + name + '\n');
-        bw.write("" + numAnimals() + '\n');
 
-        for(Animal a : animals){
-            a.save(bw);
+        bw.write("" + animals.size() + '\n');
+        for(Animal a : animals) writeAnimal(bw, a);
+
+        bw.write("" + clients.size() + '\n');
+        for(Client c : clients) c.save(bw);
+
+        bw.write("" + adoptions.size() + '\n');
+        for(Animal a : adoptions.keySet()) {
+            writeAnimal(bw, a);
+            int index = clients.indexOf(adoptions.get(a));
+            if(index < 0 || index >= clients.size()) 
+                throw new ArrayIndexOutOfBoundsException(
+                    "Adoptive client not registered");
+            bw.write(index + "\n");
         }
     }
 
@@ -71,9 +107,10 @@ public class Shelter{
     public String clientsToString(){
         StringBuilder person = new StringBuilder();
 
-        for(Client c : clients){
-            person.append("\n");
-            person.append(c.toString());
+        boolean first = true;
+        for(Client c : clients) {
+            person.append((first ? "" : "\n") + c);
+            first = false;
         }
         return person.toString();
     }
@@ -90,20 +127,23 @@ public class Shelter{
     public String toString(){
         StringBuilder str = new StringBuilder();
 
-        for(Animal a : animals){
-            str.append("\n");
-            str.append(a.toString());
+        boolean first = true;
+        for(Animal a : animals) {
+            str.append((first ? "" : "\n") + a);
+            first = false;
         }
         return str.toString();
     }
 
-    public int numAnimals(){
-        return animals.size();
-    }
-
     public void adopt(Animal animal, Client client){
-        animals.remove(animal);
+        if(adoptions.containsKey(animal)) 
+            throw new IllegalArgumentException("Already adopted: " + animal);
+        if(!animals.contains(animal)) 
+            throw new IllegalArgumentException("Not available for adoption: " + animal);
+        if(!clients.contains(client)) 
+            throw new IllegalArgumentException("Not a shelter client: " + client);
         adoptions.put(animal, client);
+        animals.remove(animal);
     }
 
     Iterator<Animal> adoptedAnimalListIterator(){
@@ -111,10 +151,16 @@ public class Shelter{
     }
 
     Client getAdoptedClient(Animal animal){
-        return adoptions.get(client);
+        return adoptions.get(animal);
     }
 
     public String adoptionsToString(){
-        return animal.toString() + " to " + (String)client.clientsToString();
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Animal a : adoptions.keySet()) {
+            result.append((first ? "" : "\n") + a + " to " + adoptions.get(a));
+            first = false;
+        }
+        return result.toString();
     }
 }
