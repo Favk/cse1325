@@ -200,12 +200,16 @@ public class MainWin extends JFrame {
         toolbar.add(anewB);
         anewB.addActionListener(event -> onNewShelterAsClick());
 
+        toolbar.add(Box.createHorizontalStrut(4));
+
         JButton openShelterButton = new JButton(new ImageIcon("home.jpg"));
     	openShelterButton.setActionCommand("Open shelter");
     	openShelterButton.setToolTipText("Open shelter and see animals");
     	openShelterButton.setBorder(null);
     	toolbar.add(openShelterButton);
     	openShelterButton.addActionListener(event -> onOpenShelterClick());
+        
+        toolbar.add(Box.createHorizontalStrut(4));    	
 
         JButton saveButton = new JButton(new ImageIcon("save.jpg"));
     	saveButton.setActionCommand("Save animals in a shelter");
@@ -214,6 +218,8 @@ public class MainWin extends JFrame {
     	toolbar.add(saveButton);
     	saveButton.addActionListener(event -> onSaveShelterClick());
 
+    	toolbar.add(Box.createHorizontalStrut(4));
+
     	JButton saveAsButton = new JButton(new ImageIcon("saveas.png"));
     	saveAsButton.setActionCommand("Save animals in a different file name");
     	saveAsButton.setToolTipText("Save all new animals in different file name");
@@ -221,8 +227,7 @@ public class MainWin extends JFrame {
     	toolbar.add(saveAsButton);
     	saveAsButton.addActionListener(event -> onSaveShelterAsClick());
 
-    	toolbar.addSeparator();
-    	toolbar.addSeparator();
+    	toolbar.add(Box.createHorizontalStrut(24));
 
     	JButton dogButton = new JButton(new ImageIcon("dog.png"));
     	dogButton.setActionCommand("Add a new dog");
@@ -231,7 +236,7 @@ public class MainWin extends JFrame {
     	toolbar.add(dogButton);
     	dogButton.addActionListener(event -> onNewDogClick());
 
-    	toolbar.add(Box.createHorizontalStrut(1));
+    	toolbar.add(Box.createHorizontalStrut(4));
 
 		JButton catButton = new JButton(new ImageIcon("cat.png"));
     	catButton.setActionCommand("Add a new cat");
@@ -240,6 +245,8 @@ public class MainWin extends JFrame {
     	toolbar.add(catButton);
     	catButton.addActionListener(event -> onNewCatClick());
 
+    	toolbar.add(Box.createHorizontalStrut(4));
+
     	JButton rabbitButton = new JButton(new ImageIcon("rabbit.jpg"));
     	rabbitButton.setActionCommand("Add a new rabbit");
     	rabbitButton.setToolTipText("Add a new rabbit, include name, age, breed and gender");
@@ -247,15 +254,14 @@ public class MainWin extends JFrame {
     	toolbar.add(rabbitButton);
     	rabbitButton.addActionListener(event -> onNewRabbitClick());
 
-    	toolbar.addSeparator();
-    	toolbar.addSeparator();
-
     	JButton clientButton = new JButton(new ImageIcon("client.jpg"));
     	clientButton.setActionCommand("Add a new client");
     	clientButton.setToolTipText("Add a new client, include name and phone number");
     	clientButton.setBorder(null);
     	toolbar.add(clientButton);
     	clientButton.addActionListener(event -> onNewClientCLick());
+
+    	toolbar.add(Box.createHorizontalStrut(4));
     	
     	toolbar.addSeparator();
 
@@ -432,26 +438,27 @@ public class MainWin extends JFrame {
     }
 
     public void onAdoptClick(){
-    	JLabel animal = new JLabel("<HTML><br/>Animal</HTML>");
-    	Animal[] aniMal = new Animal[shelter.numAnimals()];
-    	shelter.animalListIterator();
-    	JComboBox<Animal> tAnimal = new JComboBox<Animal>(aniMal);
+        JLabel animal = new JLabel("Animal");
+        JComboBox<Animal> cbAnimal = new JComboBox();
+        ListIterator<Animal> ali = shelter.animalListIterator();
+        while(ali.hasNext()) cbAnimal.addItem(ali.next());
 
-    	JLabel clientele = new JLabel("<HTML><br/>Client</HTML>");
-    	Client[] aClient = new Client[shelter.numClient()];
-    	shelter.clientListIterator();
-    	JComboBox<Client> tClient = new JComboBox<Client>(aClient);
+        JLabel client = new JLabel("<html><br/>Client<html>");
+        JComboBox<Client> cbClient = new JComboBox();
+        ListIterator<Client> cli = shelter.clientListIterator();
+        while(cli.hasNext()) cbClient.addItem(cli.next());
 
-    	Object[] objects = {animal, tAnimal, clientele, tClient};
+        Object[] objects = {animal, cbAnimal, client, cbClient};
         
-        int button = JOptionPane.showConfirmDialog(
+        int button = JOptionPane.showConfirmDialog( // Show the dialog
             this,
             objects,
-            "New Animal",
+            "❤️ Adoption ❤️",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.QUESTION_MESSAGE);
-        if(button == JOptionPane.OK_OPTION){
-        	shelter.adopt((Animal)tAnimal.getSelectedItem(), (Client)tClient.getSelectedItem());
+        if(button == JOptionPane.OK_OPTION) {
+            shelter.adopt((Animal) cbAnimal.getSelectedItem(), 
+                          (Client) cbClient.getSelectedItem());
             updateDisplay(DataView.ADOPTIONS);
         }
 
