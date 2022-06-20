@@ -163,6 +163,7 @@ public class MainWin extends JFrame {
 		listAdopted.addActionListener(event -> updateDisplay(DataView.ADOPTIONS));
 		newClient.addActionListener(event -> onNewClientCLick());
 		listClient.addActionListener(event -> updateDisplay(DataView.CLIENTS));
+		adoptAnimal.addActionListener(event -> onAdoptClick());
 		newFile.addActionListener(event -> onNewShelterAsClick());
 		openFile.addActionListener(event -> onOpenShelterClick());
 		saveShelter.addActionListener(event -> onSaveShelterClick());
